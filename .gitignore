@@ -1,0 +1,11 @@
+target/*/*
+gen
+bin
+.classpath
+.settings
+temp
+tmp
+*.classpath
+*.log
+*.swp
+.project

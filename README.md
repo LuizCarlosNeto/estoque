@@ -1,5 +1,5 @@
 estoque
 
-#criar base esquema
+#criar base esquema para o mySQL
 create database esquema
 =======
