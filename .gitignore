@@ -8,4 +8,5 @@ tmp
 *.classpath
 *.log
 *.swp
+*~
 .project
