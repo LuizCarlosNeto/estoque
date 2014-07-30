@@ -1,21 +1,27 @@
-#### Projeto estoque ####
+#Projeto estoque
 
-#Para criar base estoque para o mySQL rodar o seguinte sql
-create database esquema
+###Para criar base estoque para o mySQL rodar o seguinte sql
 
-#Clonar o projeto
-git clone https://github.com/aguiartiago/estoque.git
+    create database esquema
 
-#Configurar o projeto para o eclipse
-mvn eclipse:clean && mvn eclipse:eclipse
+###Clonar o projeto
 
-#Construir o projeto no maven 3
-mvn clean install
+    git clone https://github.com/aguiartiago/estoque.git
 
-#Subir o projeto no jetty
-mvn jetty:run
+###Configurar o projeto para o eclipse
 
-#Acessar no navegador
-localhost:8080/estoque
+    mvn eclipse:clean && mvn eclipse:eclipse
+
+###Construir o projeto no maven 3
+
+    mvn clean install
+
+###Subir o projeto no jetty
+
+    mvn jetty:run
+
+###Acessar no navegador
+
+    localhost:8080/estoque
 
 =======
