@@ -11,6 +11,11 @@
 		<param-value>Development</param-value>
 	</context-param>
 
+	<!-- CDI - Weld -->
+<!-- 	<listener> -->
+<!-- 	   <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class> -->
+<!-- 	</listener> -->
+	
 	<!-- JSF mapping -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -18,6 +23,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+ 
 	<!-- Map these files with JSF -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -41,5 +47,13 @@
 		<welcome-file>usuario/usuario.xhtml</welcome-file>
 		<!-- <welcome-file>index.jsp</welcome-file> -->
 	</welcome-file-list>
+	
+	<!-- CDI - Weld -->
+<!-- 	<resource-env-ref> -->
+<!-- 	   <resource-env-ref-name>BeanManager</resource-env-ref-name> -->
+<!-- 	   <resource-env-ref-type> -->
+<!-- 	      javax.enterprise.inject.spi.BeanManager -->
+<!-- 	   </resource-env-ref-type> -->
+<!-- 	</resource-env-ref> -->
 
 </web-app>
