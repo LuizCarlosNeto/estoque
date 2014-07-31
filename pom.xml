@@ -67,9 +67,9 @@
 			<artifactId>primefaces</artifactId>
 			<version>5.0</version>
 		</dependency>
-
 	</dependencies>
 	<build>
+		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
