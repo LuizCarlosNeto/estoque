@@ -35,11 +35,6 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.jboss.weld.servlet</groupId> -->
-<!-- 			<artifactId>weld-servlet</artifactId> -->
-<!-- 			<version>1.1.16.Final</version> -->
-<!-- 		</dependency> -->
 
 		<!-- Lado do Cliente -->
 		<dependency>
