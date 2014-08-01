@@ -7,4 +7,8 @@ script:
   - mvn clean install
 
 notifications:
-  email: false
+  email:
+      recipients:
+         - pst_callcenter@dextra-sw.com
+      on_success: change
+      on_failure: always
