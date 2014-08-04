@@ -1,14 +1,14 @@
 language: java
-
 jdk:
-   - oraclejdk7
-
-script: 
-  - mvn clean install
-
+  - openjdk7
 notifications:
   email:
-      recipients:
-         - pst_callcenter@dextra-sw.com
-      on_success: change
-      on_failure: always
+    recipients: 
+      - aguiartiago@hotmail.com
+    on_success: change
+    on_failure: always
+branches:
+  only:
+    - master
+script:  
+  - mvn clean install
