@@ -17,7 +17,6 @@ abstract class GenericDAO<T> implements Serializable {
  
     private void beginTransaction() {
         em = emf.createEntityManager();
- 
         em.getTransaction().begin();
     }
  
@@ -58,21 +57,31 @@ abstract class GenericDAO<T> implements Serializable {
     }
  
     protected void delete(Object id, Class<T> classe) {
-        T entityToBeRemoved = em.getReference(classe, id);
- 
-        em.remove(entityToBeRemoved);
+    	this.beginTransaction();
+    	T entityToBeRemoved = em.getReference(classe, id);
+    	em.remove(entityToBeRemoved);
+        this.commitAndCloseTransaction();
     }
  
     public T update(T entity) {
-        return em.merge(entity);
+    	this.beginTransaction();
+    	T result = em.merge(entity);
+        this.commitAndCloseTransaction();
+        return result;
     }
  
     public T find(int entityID) {
-        return em.find(entityClass, entityID);
+    	this.beginTransaction();
+    	T result = em.find(entityClass, entityID);
+    	this.closeTransaction();
+        return result;
     }
  
     public T findReferenceOnly(int entityID) {
-        return em.getReference(entityClass, entityID);
+    	this.beginTransaction();
+    	T result = em.getReference(entityClass, entityID);
+    	this.closeTransaction();
+        return result;
     }
  
     // Using the unchecked because JPA does not have a
@@ -94,6 +103,7 @@ abstract class GenericDAO<T> implements Serializable {
         T result = null;
  
         try {
+        	this.beginTransaction();
             Query query = em.createNamedQuery(namedQuery);
  
             // Method that will populate parameters if they are passed not null and empty
@@ -102,6 +112,7 @@ abstract class GenericDAO<T> implements Serializable {
             }
  
             result = (T) query.getSingleResult();
+            this.closeTransaction();
  
         } catch (NoResultException e) {
             System.out.println("No result found for named query: " + namedQuery);

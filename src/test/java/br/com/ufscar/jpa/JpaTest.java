@@ -4,17 +4,22 @@ import java.util.List;
 
 import br.com.ufscar.controller.DepartmentController;
 import br.com.ufscar.controller.EmployeeController;
+import br.com.ufscar.controller.UserController;
 import br.com.ufscar.entity.Department;
 import br.com.ufscar.entity.Employee;
+import br.com.ufscar.entity.Role;
+import br.com.ufscar.entity.User;
 
 public class JpaTest {
 	
 	DepartmentController departmentController = new DepartmentController();
 	EmployeeController employeeController = new EmployeeController();
+	UserController userController = new UserController();
 
 	public JpaTest() {
 		this.departmentController = new DepartmentController();
 		this.employeeController = new EmployeeController();
+		this.userController = new UserController();
 	}
 
 	public static void main(String[] args) {
@@ -23,6 +28,7 @@ public class JpaTest {
 
 		try {
 			test.createEmployees();
+			test.createUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,5 +55,15 @@ public class JpaTest {
 		for (Employee next : resultList) {
 			System.out.println("next employee: " + next);
 		}
+	}
+	
+	private void createUser() {
+		User user = new User();
+		user.setEmail("a@a.com");
+		user.setName("admin");
+		user.setPassword("admin");
+		user.setRole(Role.ADMIN);
+		
+		userController.persist(user);
 	}
 }
