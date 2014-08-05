@@ -9,10 +9,21 @@
 <h:body>
 	<ui:composition>
 		<h:form>
-			<p:commandButton styleClass="menuButton" icon="ui-icon-arrowstop-1-e" rendered="#{userMB.admin or userMB.defaultUser}" action="/pages/protected/defaultUser/defaultUserIndex.xhtml" value="#{bundle.personPlural}" ajax="false" immediate="true" />
-			<br />
-			<p:commandButton styleClass="menuButton" icon="ui-icon-arrowstop-1-e" rendered="#{userMB.admin}" action="/pages/protected/admin/adminIndex.xhtml" value="#{bundle.dogPlural}" ajax="false" immediate="true" />
-			<br />
+			
+			<ul id="nav">
+				<li><a href="/estoque">Home</a></li>
+			    <li><a href="/estoque/pages/protected/admin/usuario/usuario.xhtml">Usuario</a></li>
+			    	<ul>
+				        <li><a href="#">Web Design</a></li>
+				        <li><a href="#">Hospedagem</a></li>
+				        <li><a href="#">SEO</a></li>
+				        <li><a href="#">Sistemas</a></li>
+			    	</ul>
+			    </li>
+			 
+			    <li><a href="#">Contato</a></li>
+			</ul>
+			
 		</h:form>
 	</ui:composition>
 </h:body>
