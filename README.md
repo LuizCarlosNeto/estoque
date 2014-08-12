@@ -6,7 +6,7 @@
 
 ###Clonar o projeto
 
-    git clone https://github.com/aguiartiago/estoque.git
+    git clone git@github.com:aguiartiago/estoque.git
 
 ###Configurar o projeto para o eclipse
 
