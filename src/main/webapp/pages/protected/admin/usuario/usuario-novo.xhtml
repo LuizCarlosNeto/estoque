@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:body>
+		<ui:composition template="/pages/protected/templates/layout.xhtml">
+			<ui:define name="content">
+				<h3>Cadastro de Departamento</h3>
+				<p:outputLabel>Nome do Departamento</p:outputLabel>
+				<h:form>
+					<p:inputText value="#{usuarioBBean.name}"></p:inputText>
+					<p:commandButton value="cadastrar" action="#{usuarioBBean.saveDepartment}"></p:commandButton>
+				</h:form>
+			</ui:define>
+    	</ui:composition>
+	</h:body>
+	
+</html>
