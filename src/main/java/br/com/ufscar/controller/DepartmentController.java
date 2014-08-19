@@ -1,5 +1,7 @@
 package br.com.ufscar.controller;
 
+import java.util.List;
+
 import br.com.ufscar.dao.DepartmentDAO;
 import br.com.ufscar.entity.Department;
 
@@ -9,5 +11,14 @@ public class DepartmentController {
 	public void persist(Department department) {
 		departmentDAO.save(department);
 	}
+	
+	public Department findById(Integer entityID) {
+		return departmentDAO.find(entityID);
+	}
+	
+	public List<Department> findAll() {
+		return departmentDAO.findAll();
+	}
+	
 	
 }

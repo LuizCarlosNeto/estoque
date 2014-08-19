@@ -3,11 +3,11 @@ package br.com.ufscar.dao;
 import java.io.Serializable;
 import java.util.*;
 import java.util.Map.*;
- 
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
  
-abstract class GenericDAO<T> implements Serializable {
+public class GenericDAO<T> implements Serializable {
     private static final long serialVersionUID = 1L;
  
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistenceUnit");
@@ -24,7 +24,8 @@ abstract class GenericDAO<T> implements Serializable {
         em.getTransaction().commit();
     }
  
-    private void rollback() {
+    @SuppressWarnings("unused")
+	private void rollback() {
         em.getTransaction().rollback();
     }
  
@@ -37,11 +38,13 @@ abstract class GenericDAO<T> implements Serializable {
         closeTransaction();
     }
  
-    private void flush() {
+    @SuppressWarnings("unused")
+	private void flush() {
         em.flush();
     }
  
-    private void joinTransaction() {
+    @SuppressWarnings("unused")
+	private void joinTransaction() {
         em = emf.createEntityManager();
         em.joinTransaction();
     }
@@ -119,6 +122,33 @@ abstract class GenericDAO<T> implements Serializable {
         } catch (Exception e) {
             System.out.println("Error while running query: " + e.getMessage());
             e.printStackTrace();
+        }
+ 
+        return result;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<T> findResults(String namedQuery, Map<String, Object> parameters) {
+    	List<T> result = null;
+ 
+        try {
+        	this.beginTransaction();
+            Query query = em.createQuery(namedQuery);
+ 
+            // Method that will populate parameters if they are passed not null and empty
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+ 
+            result = (List<T>)query.getResultList();
+ 
+        } catch (NoResultException e) {
+            System.out.println("No result found for named query: " + namedQuery);
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+        	this.closeTransaction();
         }
  
         return result;

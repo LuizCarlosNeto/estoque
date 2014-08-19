@@ -24,4 +24,12 @@
 
     localhost:8080/estoque
 
+###Login Admin
+admin1@estoque.com
+admin1
+
+###Login Cliente
+userClient1@estoque.com
+userClient1
+
 =======
