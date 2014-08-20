@@ -2,7 +2,7 @@
 
 ###Para criar base estoque para o mySQL rodar o seguinte sql
 
-    create database esquema
+    create database estoque
 
 ###Clonar o projeto
 
