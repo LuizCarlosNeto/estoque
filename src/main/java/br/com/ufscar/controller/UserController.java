@@ -9,7 +9,7 @@ public class UserController {
 	private UserDAO userDAO = new UserDAO();
 
 	public List<User> findAll() {
-		return userDAO.findAll();
+		return userDAO.findAll(User.class);
 	}
 
 	public void persist(User user) {

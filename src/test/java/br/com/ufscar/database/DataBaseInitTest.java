@@ -80,8 +80,7 @@ public class DataBaseInitTest extends TestCase {
 	}
 
 	private Boolean verificaSeExisteEmployee() {
-		GenericDAO<Employee> genericEmployeesDAO = new GenericDAO<>(
-				Employee.class);
+		GenericDAO genericEmployeesDAO = new GenericDAO();
 
 		String query = "SELECT c FROM " + Employee.class.getSimpleName()
 				+ " c WHERE c.name = :name";
@@ -94,8 +93,8 @@ public class DataBaseInitTest extends TestCase {
 	}
 
 	private Boolean verificaSeExisteDepartment() {
-		GenericDAO<Department> genericDepartmentDAO = new GenericDAO<>(
-				Department.class);
+		GenericDAO genericDepartmentDAO = new GenericDAO(
+				);
 
 		String query = "SELECT c FROM " + Department.class.getSimpleName()
 				+ " c WHERE c.name = :name";
@@ -108,7 +107,7 @@ public class DataBaseInitTest extends TestCase {
 	}
 
 	private Boolean verificaSeExisteUserAdmin() {
-		GenericDAO<User> genericUserDAO = new GenericDAO<>(User.class);
+		GenericDAO genericUserDAO = new GenericDAO();
 
 		String query = "SELECT c FROM " + User.class.getSimpleName()
 				+ " c WHERE c.name = :name";
@@ -120,7 +119,7 @@ public class DataBaseInitTest extends TestCase {
 	}
 
 	private Boolean verificaSeExisteUserClient() {
-		GenericDAO<User> genericUserDAO = new GenericDAO<>(User.class);
+		GenericDAO genericUserDAO = new GenericDAO();
 
 		String query = "SELECT c FROM " + User.class.getSimpleName()
 				+ " c WHERE c.name = :name";

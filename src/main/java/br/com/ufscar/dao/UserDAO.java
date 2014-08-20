@@ -5,12 +5,12 @@ import java.util.Map;
 
 import br.com.ufscar.entity.User;
 
-public class UserDAO extends GenericDAO<User>{
+public class UserDAO extends GenericDAO{
 
 	private static final long serialVersionUID = 1L;
 
 	public UserDAO() {
-		super(User.class);
+		super();
 	}
 
 	public User findUserByEmail(String email) {

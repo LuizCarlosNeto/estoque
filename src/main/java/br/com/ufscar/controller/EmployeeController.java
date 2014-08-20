@@ -9,7 +9,7 @@ public class EmployeeController {
 	private EmployeeDAO employeeDAO = new EmployeeDAO();
 
 	public List<Employee> findAll() {
-		return employeeDAO.findAll();
+		return employeeDAO.findAll(Employee.class);
 	}
 
 	public void persist(Employee employee) {

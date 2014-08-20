@@ -13,11 +13,11 @@ public class DepartmentController {
 	}
 	
 	public Department findById(Integer entityID) {
-		return departmentDAO.find(entityID);
+		return departmentDAO.find(Department.class, entityID);
 	}
 	
 	public List<Department> findAll() {
-		return departmentDAO.findAll();
+		return departmentDAO.findAll(Department.class);
 	}
 	
 	

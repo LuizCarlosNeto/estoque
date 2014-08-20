@@ -7,13 +7,11 @@ import java.util.Map.*;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
  
-public class GenericDAO<T> implements Serializable {
+public class GenericDAO implements Serializable {
     private static final long serialVersionUID = 1L;
  
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistenceUnit");
     private EntityManager em;
- 
-    private Class<T> entityClass;
  
     private void beginTransaction() {
         em = emf.createEntityManager();
@@ -49,40 +47,36 @@ public class GenericDAO<T> implements Serializable {
         em.joinTransaction();
     }
  
-    public GenericDAO(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
- 
-    public void save(T entity) {
+    public <T> void save(T entity) {
     	this.beginTransaction();
         em.persist(entity);
         this.commitAndCloseTransaction();
     }
  
-    protected void delete(Object id, Class<T> classe) {
+    protected <T> void delete(Object id, Class<T> classe) {
     	this.beginTransaction();
     	T entityToBeRemoved = em.getReference(classe, id);
     	em.remove(entityToBeRemoved);
         this.commitAndCloseTransaction();
     }
  
-    public T update(T entity) {
+    public <T> T update(T entity) {
     	this.beginTransaction();
     	T result = em.merge(entity);
         this.commitAndCloseTransaction();
         return result;
     }
  
-    public T find(int entityID) {
+    public <T> T find(Class<T> clazz, Object entityID) {
     	this.beginTransaction();
-    	T result = em.find(entityClass, entityID);
+    	T result = em.find(clazz, entityID);
     	this.closeTransaction();
         return result;
     }
  
-    public T findReferenceOnly(int entityID) {
+    public <T> T findReferenceOnly(Class<T> clazz, int entityID) {
     	this.beginTransaction();
-    	T result = em.getReference(entityClass, entityID);
+    	T result = em.getReference(clazz, entityID);
     	this.closeTransaction();
         return result;
     }
@@ -90,10 +84,10 @@ public class GenericDAO<T> implements Serializable {
     // Using the unchecked because JPA does not have a
     // em.getCriteriaBuilder().createQuery()<T> method
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public List<T> findAll() {
+    public <T> List<T> findAll(Class<T> clazz) {
     	this.beginTransaction();
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
+        cq.select(cq.from(clazz));
         List<T> result = em.createQuery(cq).getResultList();
         this.closeTransaction();
         return result;
@@ -102,7 +96,7 @@ public class GenericDAO<T> implements Serializable {
     // Using the unchecked because JPA does not have a
     // query.getSingleResult()<T> method
     @SuppressWarnings("unchecked")
-    protected T findOneResult(String namedQuery, Map<String, Object> parameters) {
+    protected <T> T findOneResult(String namedQuery, Map<String, Object> parameters) {
         T result = null;
  
         try {
@@ -128,7 +122,7 @@ public class GenericDAO<T> implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
-	public List<T> findResults(String namedQuery, Map<String, Object> parameters) {
+	public <T> List<T> findResults(String namedQuery, Map<String, Object> parameters) {
     	List<T> result = null;
  
         try {
