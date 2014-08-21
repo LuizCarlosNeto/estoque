@@ -17,7 +17,7 @@ public class Department {
 	private String name;
 	 
 	@OneToMany(mappedBy="department",cascade=CascadeType.PERSIST)
-	private List<Employee> employees = new ArrayList<Employee>();
+	private List<User> employees = new ArrayList<User>();
 	 
 	public Department() {
 	super();
@@ -37,10 +37,10 @@ public class Department {
 	public void setName(String name) {
 	this.name = name;
 	}
-	public List<Employee> getEmployees() {
+	public List<User> getEmployees() {
 	return employees;
 	}
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(List<User> employees) {
 	this.employees = employees;
 	}
 }

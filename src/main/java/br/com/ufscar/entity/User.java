@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
@@ -24,10 +25,16 @@ public class User implements Serializable {
 
 	@Column(unique = true)
 	private String email;
+	
 	private String password;
+	
 	private String name;
+	
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	@ManyToOne
+	private Department department;
 
 	public Integer getId() {
 		return id;
@@ -75,6 +82,14 @@ public class User implements Serializable {
 
 	public boolean isUser() {
 		return Role.USER.equals(role);
+	}
+	
+	public Department getDepartment() {
+		return department;
+	}
+	
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
 	@Override

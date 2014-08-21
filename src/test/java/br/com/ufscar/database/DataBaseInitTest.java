@@ -8,18 +8,15 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import br.com.ufscar.controller.DepartmentController;
-import br.com.ufscar.controller.EmployeeController;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.entity.Department;
-import br.com.ufscar.entity.Employee;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 
 public class DataBaseInitTest extends TestCase {
 
 	DepartmentController departmentController = new DepartmentController();
-	EmployeeController employeeController = new EmployeeController();
 	UserController userController = new UserController();
 
 	private final String DEPARTMENT = "department1";
@@ -31,15 +28,15 @@ public class DataBaseInitTest extends TestCase {
 	public void testeDataBaseInit() {
 
 		try {
-			createEmployeesAndDepartament();
 			createUserAdmin();
 			createUserClient();
+			createEmployeesAndDepartament();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		assertTrue(verificaSeExisteDepartment());
-		assertTrue(verificaSeExisteEmployee());
+		assertTrue(verificaSeExisteUserEmployee());
 		assertTrue(verificaSeExisteUserAdmin());
 		assertTrue(verificaSeExisteUserClient());
 		
@@ -51,9 +48,14 @@ public class DataBaseInitTest extends TestCase {
 			departmentController.persist(department);
 		}
 
-		Employee employee = new Employee(EMPLOYEE, department);
-		if (!verificaSeExisteEmployee()) {
-			employeeController.persist(employee);
+		if (!verificaSeExisteUserEmployee()) {
+			User userEmployee = new User();
+			userEmployee.setEmail(EMPLOYEE + "@estoque.com");
+			userEmployee.setName(EMPLOYEE);
+			userEmployee.setPassword(EMPLOYEE);
+			userEmployee.setRole(Role.USER);
+			userEmployee.setDepartment(department);
+			userController.persist(userEmployee);
 		}
 	}
 
@@ -79,10 +81,10 @@ public class DataBaseInitTest extends TestCase {
 		}
 	}
 
-	private Boolean verificaSeExisteEmployee() {
+	private Boolean verificaSeExisteUserEmployee() {
 		GenericDAO genericEmployeesDAO = new GenericDAO();
 
-		String query = "SELECT c FROM " + Employee.class.getSimpleName()
+		String query = "SELECT c FROM " + User.class.getSimpleName()
 				+ " c WHERE c.name = :name";
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("name", EMPLOYEE);
