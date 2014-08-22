@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.ufscar.controller.UserController;
 import br.com.ufscar.entity.User;
 
 
@@ -17,7 +18,18 @@ public class UserMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
-
+	UserController userController;
+	
+	public UserMB() {
+		super();
+		this.init();
+	}
+	
+	private void init() {
+		user = new User();
+		userController = new UserController();
+	}
+	
 	public boolean isAdmin() {
 		return user.isAdmin();
 	}

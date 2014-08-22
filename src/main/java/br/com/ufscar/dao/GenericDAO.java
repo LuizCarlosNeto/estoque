@@ -53,19 +53,29 @@ public class GenericDAO implements Serializable {
         this.commitAndCloseTransaction();
     }
  
-    protected <T> void delete(Object id, Class<T> classe) {
+    public <T> T update(T entity) {
+    	this.beginTransaction();
+    	T result = em.merge(entity);
+    	this.commitAndCloseTransaction();
+    	return result;
+    }
+    
+//    TODO: criar classe BaseEntity com id para extender o T
+//    public <T> T persist(T entity) {
+//    	if (entity.getId() == null) {
+//    		save(entity);
+//    	} else {
+//    		update(entity);
+//    	}
+//    }
+    
+    public <T> void delete(Object id, Class<T> classe) {
     	this.beginTransaction();
     	T entityToBeRemoved = em.getReference(classe, id);
     	em.remove(entityToBeRemoved);
         this.commitAndCloseTransaction();
     }
  
-    public <T> T update(T entity) {
-    	this.beginTransaction();
-    	T result = em.merge(entity);
-        this.commitAndCloseTransaction();
-        return result;
-    }
  
     public <T> T find(Class<T> clazz, Object entityID) {
     	this.beginTransaction();
@@ -96,7 +106,7 @@ public class GenericDAO implements Serializable {
     // Using the unchecked because JPA does not have a
     // query.getSingleResult()<T> method
     @SuppressWarnings("unchecked")
-    protected <T> T findOneResult(String namedQuery, Map<String, Object> parameters) {
+    public <T> T findOneResult(String namedQuery, Map<String, Object> parameters) {
         T result = null;
  
         try {

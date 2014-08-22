@@ -10,11 +10,38 @@
 	<h:body>
 		<ui:composition template="/pages/protected/templates/layout.xhtml">
 			<ui:define name="content">
-				<h3>Cadastro de Departamento</h3>
-				<p:outputLabel>Nome do Departamento</p:outputLabel>
+				<p:separator />
 				<h:form>
-					<p:inputText value="#{usuarioBBean.name}"></p:inputText>
-					<p:commandButton value="cadastrar" action="#{usuarioBBean.saveDepartment}"></p:commandButton>
+				    <p:growl id="msgs" showDetail="true" />
+				    <p:panel header="Cadastro de Usuário" style="margin-bottom:10px;">
+				        <h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel>Nome</p:outputLabel>
+							<p:inputText value="#{usuarioCadastroBBean.user.name}"></p:inputText>
+							
+							<p:outputLabel>Email</p:outputLabel>
+							<p:inputText value="#{usuarioCadastroBBean.user.email}" required="true"></p:inputText>
+							
+							<p:outputLabel>Senha</p:outputLabel>
+							<h:inputSecret value="#{usuarioCadastroBBean.user.password}" label="Password" required="true">
+								<f:validateLength minimum="6" />
+							</h:inputSecret>
+							
+							<p:outputLabel>Tipo</p:outputLabel>
+							<p:selectOneMenu value="#{usuarioCadastroBBean.user.role}" required="true">
+								<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
+					            <f:selectItems value="#{usuarioCadastroBBean.tipos}" />
+					        </p:selectOneMenu>
+					        
+					        <p:outputLabel>Departamento</p:outputLabel>
+							<p:selectOneMenu value="#{usuarioCadastroBBean.departmentSelectedId}" required="true">
+								<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
+					            <f:selectItems value="#{usuarioCadastroBBean.departments}" />
+					        </p:selectOneMenu>
+						
+						</h:panelGrid>
+					</p:panel>
+					<p:separator />
+					<p:commandButton value="Salvar" update="msgs" action="#{usuarioCadastroBBean.saveUser}" icon="ui-icon-check"></p:commandButton>
 				</h:form>
 			</ui:define>
     	</ui:composition>

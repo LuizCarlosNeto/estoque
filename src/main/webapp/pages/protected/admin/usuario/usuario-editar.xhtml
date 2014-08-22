@@ -10,11 +10,33 @@
 	<h:body>
 		<ui:composition template="/pages/protected/templates/layout.xhtml">
 			<ui:define name="content">
-				<h3>Cadastro de Departamento</h3>
+				<p:separator />
 				<h:form>
-					<h:inputText value="#{usuarioBBean.name}"></h:inputText>
-					<h:commandButton value="cadastrar" action="#{usuarioBBean.saveDepartment}"></h:commandButton>
-				</h:form>
+				    <p:panel header="Usuários Cadastrados" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT" var="userTable" value="#{usuarioCadastroBBean.listUsers}" selection="#{usuarioCadastroBBean.user}" rowKey="#{userTable.id}">
+					        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+					        <p:column headerText="Id">
+					            <h:outputText value="#{userTable.id}" />
+					        </p:column>
+					        <p:column headerText="Email">
+					            <h:outputText value="#{userTable.email}" />
+					        </p:column>
+					        <p:column headerText="Nome">
+					            <h:outputText value="#{userTable.name}" />
+					        </p:column>
+					        <p:column headerText="Tipo">
+					            <h:outputText value="#{userTable.role}" />
+					        </p:column>
+					        <p:column headerText="Departamento">
+					            <h:outputText value="#{userTable.department.name}" />
+					        </p:column>
+					        <f:facet name="footer">
+									<p:commandButton icon="ui-icon-pencil" value="Editar" action="#{usuarioCadastroBBean.editUser}"/>
+									<p:commandButton icon="ui-icon-trash" value="Remover" action="#{usuarioCadastroBBean.removeUser}"/>
+					        </f:facet>
+					    </p:dataTable>
+				    </p:panel>
+			    </h:form>
 			</ui:define>
     	</ui:composition>
 	</h:body>
