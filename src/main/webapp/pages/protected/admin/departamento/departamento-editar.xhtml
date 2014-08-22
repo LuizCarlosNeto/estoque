@@ -10,11 +10,24 @@
 	<h:body>
 		<ui:composition template="/pages/protected/templates/layout.xhtml">
 			<ui:define name="content">
-				<h3>Cadastro de Departamento</h3>
+				<p:separator />
 				<h:form>
-					<h:inputText value="#{usuarioBBean.name}"></h:inputText>
-					<h:commandButton value="cadastrar" action="#{usuarioBBean.saveDepartment}"></h:commandButton>
-				</h:form>
+				    <p:panel header="Lista de Departamentos" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT" var="entityTable" value="#{departamentoCadastroBBean.listDepartments}" selection="#{departamentoCadastroBBean.department}" rowKey="#{entityTable.id}">
+					        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+					        <p:column headerText="Id">
+					            <h:outputText value="#{entityTable.id}" />
+					        </p:column>
+					        <p:column headerText="Nome">
+					            <h:outputText value="#{entityTable.name}" />
+					        </p:column>
+					        <f:facet name="footer">
+									<p:commandButton icon="ui-icon-pencil" value="Editar" action="#{departamentoCadastroBBean.editDepartment}"/>
+									<p:commandButton icon="ui-icon-trash" value="Remover" action="#{departamentoCadastroBBean.removeDepartment}"/>
+					        </f:facet>
+					    </p:dataTable>
+				    </p:panel>
+			    </h:form>
 			</ui:define>
     	</ui:composition>
 	</h:body>

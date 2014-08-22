@@ -5,20 +5,23 @@
 <h:head>
 </h:head>
 <h:body>
-	<h2>#{bundle.loginHello}</h2>
+	<p:separator />
 	<h:form>
 		<p:growl showDetail="false" life="3000" />
-		<h:panelGrid columns="2">
-			<p:outputLabel value="#{bundle.loginEmail}" />
-			<p:inputText value="#{loginMB.email}" label="Email" id="email" required="true">
-				<f:validateLength minimum="6" />
-			</p:inputText>
-			<p:outputLabel value="#{bundle.loginPassword}" />
-			
-			<h:inputSecret value="#{loginMB.password}" label="Password" id="senha" required="true" autocomplete="off" >
-				<f:validateLength minimum="6" />
-			</h:inputSecret>
-		</h:panelGrid>
+		<p:panel header="#{bundle.loginHello}" style="margin-bottom:10px;">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.loginEmail}" />
+				<p:inputText value="#{loginMB.email}" label="Email" id="email" required="true">
+					<f:validateLength minimum="6" />
+				</p:inputText>
+				<p:outputLabel value="#{bundle.loginPassword}" />
+				
+				<h:inputSecret value="#{loginMB.password}" label="Password" id="senha" required="true" autocomplete="off" >
+					<f:validateLength minimum="6" />
+				</h:inputSecret>
+			</h:panelGrid>
+		</p:panel>
+		<p:separator />
 		<p:commandButton action="#{loginMB.login}" value="Log in" ajax="false" />
 	</h:form>
 </h:body>
