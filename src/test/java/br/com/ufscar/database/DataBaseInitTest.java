@@ -1,6 +1,7 @@
 package br.com.ufscar.database;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
@@ -10,7 +11,9 @@ import org.junit.Test;
 import br.com.ufscar.controller.DepartmentController;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
+import br.com.ufscar.dao.ItemGroupDAO;
 import br.com.ufscar.entity.Department;
+import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 
@@ -23,6 +26,7 @@ public class DataBaseInitTest extends TestCase {
 	private final String EMPLOYEE = "employee1";
 	private final String USER_ADMIN = "admin1";
 	private final String USER_CLIENT = "userClient1";
+	private final String[] ITEM_GROUPS = {"Escritório", "Limpeza", "Informática"};
 
 	@Test
 	public void testeDataBaseInit() {
@@ -31,6 +35,7 @@ public class DataBaseInitTest extends TestCase {
 			createUserAdmin();
 			createUserClient();
 			createEmployeesAndDepartament();
+			createItemGroup();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,6 +44,9 @@ public class DataBaseInitTest extends TestCase {
 		assertTrue(verificaSeExisteUserEmployee());
 		assertTrue(verificaSeExisteUserAdmin());
 		assertTrue(verificaSeExisteUserClient());
+		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[0]));
+		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[1]));
+		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[2]));
 		
 	}
 
@@ -78,6 +86,17 @@ public class DataBaseInitTest extends TestCase {
 			user.setPassword(USER_CLIENT);
 			user.setRole(Role.USER);
 			userController.persist(user);
+		}
+	}
+
+	private void createItemGroup() {
+		ItemGroupDAO itemGroupDAO = new ItemGroupDAO();
+		for (String groupName : this.ITEM_GROUPS) {
+			if (!verificaSeExisteItemGroup(groupName)) {
+				ItemGroup itemGroup = new ItemGroup();
+				itemGroup.setName(groupName);
+				itemGroupDAO.save(itemGroup);
+			}
 		}
 	}
 
@@ -130,6 +149,18 @@ public class DataBaseInitTest extends TestCase {
 		Integer tamanho = genericUserDAO.findResults(query, parameters).size();
 
 		return tamanho > 0 ? true : false;
+	}
+
+	private Boolean verificaSeExisteItemGroup(String itemGroupName) {
+		GenericDAO genericItemGroupDAO = new GenericDAO();
+
+		String query = "SELECT ig FROM " + ItemGroup.class.getSimpleName()
+				+ " ig WHERE UPPER(ig.name) = UPPER(:name)";
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("name", itemGroupName);
+		List<Object> results = genericItemGroupDAO.findResults(query, parameters);
+
+		return !results.isEmpty() ? true : false;
 	}
 
 }

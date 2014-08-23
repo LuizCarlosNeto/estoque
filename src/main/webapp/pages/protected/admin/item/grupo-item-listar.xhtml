@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:body>
+		<ui:composition template="/pages/protected/templates/layout.xhtml">
+			<ui:define name="content">
+				<p:separator />
+				<h:form id="form" >
+				    <p:panel header="Grupo de Itens Cadastrados" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT" var="itemGroupTable" value="#{itemGroupBBean.listItemGroups}" selection="#{itemGroupBBean.itemGroup}" rowKey="#{itemGroupTable.id}">
+					        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+					        <p:column headerText="Id">
+					            <h:outputText value="#{itemGroupTable.id}" />
+					        </p:column>
+					        <p:column headerText="Nome">
+					            <h:outputText value="#{itemGroupTable.name}" />
+					        </p:column>
+					        <f:facet name="footer">
+									<p:commandButton icon="ui-icon-circle-plus" value="Novo" action="#{itemGroupBBean.showNew}"/>
+									<p:commandButton icon="ui-icon-pencil" value="Editar" action="#{itemGroupBBean.showEdit}"/>
+									<p:commandButton icon="ui-icon-trash" value="Remover" action="#{itemGroupBBean.removeItemGroup}" update="entityDT" />
+					        </f:facet>
+					    </p:dataTable>
+				    </p:panel>
+			    </h:form>
+			</ui:define>
+    	</ui:composition>
+	</h:body>
+	
+</html>

@@ -49,6 +49,7 @@ public class UsuarioCadastroBBean implements Serializable {
 		this.reset();
 		return "/pages/protected/admin/usuario/usuario-editar.xhtml";
 	}
+	
 	private Department findDepartmentById(Object entityID) {
 		return dao.find(Department.class, entityID);
 	}
