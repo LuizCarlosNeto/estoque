@@ -1,5 +1,5 @@
 #!/bin/bash
 
-nohup '/usr/local/tomcat7/bin/shutdown.sh' > /tmp/tomcat.log
+/usr/local/tomcat7/bin/shutdown.sh
 
-nohup '/usr/local/tomcat7/bin/startup.sh' > /tmp/tomcat.log
+/usr/local/tomcat7/bin/startup.sh
