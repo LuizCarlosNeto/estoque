@@ -6,13 +6,12 @@ git pull
 
 mvn clean install
 
-cd /root/projetos/estoque/script/host
+/usr/local/tomcat7/bin/shutdown.sh
 
-pwd
+rm /usr/local/tomcat7/webapps/*.war
+rm /usr/local/tomcat7/webapps/*.war.*
 
-./stop.sh
+cp /root/projetos/estoque/target/estoque*.war /usr/local/tomcat7/webapps
 
-./deploy.sh
-
-./start.sh
+/usr/local/tomcat7/bin/startup.sh
 
