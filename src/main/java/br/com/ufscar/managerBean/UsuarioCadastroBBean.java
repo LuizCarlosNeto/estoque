@@ -44,7 +44,9 @@ public class UsuarioCadastroBBean implements Serializable {
 	}
 	
 	public String saveUser() {
-		user.setDepartment(dao.find(Department.class, departmentSelectedId));
+		if (departmentSelectedId != null){
+			user.setDepartment(dao.find(Department.class, departmentSelectedId));
+		}
 		if (user.getId() != null) {
 			dao.update(user);
 		} else{

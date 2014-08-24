@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:body>
+		<ui:composition template="/pages/protected/templates/layout.xhtml">
+			<ui:define name="content">
+				<p:separator />
+				<h:form>
+				    <p:growl id="msgs" showDetail="true" />
+				    <p:panel header="Cadastro de Item" style="margin-bottom:10px;">
+				        <h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel>Nome</p:outputLabel>
+							<p:inputText value="#{itemBBean.item.name}" required="true" />
+							
+							<p:outputLabel>Descrição</p:outputLabel>
+							<p:inputText value="#{itemBBean.item.descricao}" required="true" />
+							
+							<p:outputLabel>Grupo</p:outputLabel>
+							<p:selectOneMenu value="#{itemBBean.itemGroupSelectedId}" required="true">
+								<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
+					            <f:selectItems value="#{itemBBean.listItemGroups}" />
+					        </p:selectOneMenu>
+							
+						</h:panelGrid>
+					</p:panel>
+					<p:separator />
+					<p:commandButton value="Salvar" update="msgs" action="#{itemBBean.saveItem}" icon="ui-icon-check"></p:commandButton>
+				</h:form>
+			</ui:define>
+    	</ui:composition>
+	</h:body>
+	
+</html>

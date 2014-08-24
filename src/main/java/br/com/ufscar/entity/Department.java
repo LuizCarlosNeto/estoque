@@ -14,6 +14,7 @@ public class Department {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	private String name;
 	 
 	@OneToMany(mappedBy="department",cascade=CascadeType.PERSIST)

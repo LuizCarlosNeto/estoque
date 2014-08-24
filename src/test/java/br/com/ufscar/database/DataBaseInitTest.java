@@ -13,6 +13,7 @@ import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.dao.ItemGroupDAO;
 import br.com.ufscar.entity.Department;
+import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
@@ -26,7 +27,11 @@ public class DataBaseInitTest extends TestCase {
 	private final String EMPLOYEE = "employee1";
 	private final String USER_ADMIN = "admin1";
 	private final String USER_CLIENT = "userClient1";
-	private final String[] ITEM_GROUPS = {"Escritório", "Limpeza", "Informática"};
+	private final String ESCRITORIO = "Escritório";
+	private final String LIMPEZA = "Limpeza";
+	private final String IMFORMATICA = "Informática";
+	private final String ITEM = "Item1";
+	private final String[] ITEM_GROUPS = {ESCRITORIO, LIMPEZA, IMFORMATICA};
 
 	@Test
 	public void testeDataBaseInit() {
@@ -36,6 +41,7 @@ public class DataBaseInitTest extends TestCase {
 			createUserClient();
 			createEmployeesAndDepartament();
 			createItemGroup();
+			createItem();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,6 +53,7 @@ public class DataBaseInitTest extends TestCase {
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[0]));
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[1]));
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[2]));
+		assertTrue(verificaSeExisteItem());
 		
 	}
 
@@ -98,6 +105,35 @@ public class DataBaseInitTest extends TestCase {
 				itemGroupDAO.save(itemGroup);
 			}
 		}
+	}
+	
+	private void createItem() {
+		GenericDAO dao = new GenericDAO();
+		if (!verificaSeExisteItem()) {
+			Item item = new Item();
+			item.setName(ITEM);
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("name", ESCRITORIO);
+			ItemGroup group = dao.findOneResult(ItemGroup.FIND_BY_NAME, param);
+			group.setName(ESCRITORIO);
+			item.setItemGroup(group);
+			dao.save(item);
+		}
+	}
+	
+	
+	
+
+	private boolean verificaSeExisteItem() {
+		GenericDAO genericDAO = new GenericDAO();
+
+		String query = "SELECT c FROM " + Item.class.getSimpleName()
+				+ " c WHERE c.name = :name";
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("name", ITEM);
+		Integer tamanho = genericDAO.findResults(query, parameters).size();
+
+		return tamanho > 0 ? true : false;
 	}
 
 	private Boolean verificaSeExisteUserEmployee() {

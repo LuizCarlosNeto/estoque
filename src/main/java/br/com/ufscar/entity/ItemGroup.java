@@ -1,13 +1,17 @@
 package br.com.ufscar.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQuery(name = "ItemGroup.findItemGroupByName", query = "SELECT ig FROM ItemGroup ig WHERE UPPER(ig.name) = UPPER(:name)")
@@ -18,16 +22,19 @@ public class ItemGroup implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	@Column(unique = true)
 	private String name;
 	
-	public Integer getId() {
+//	@OneToMany(mappedBy="item",cascade=CascadeType.PERSIST)
+//	private List<Item> itens = new ArrayList<Item>();
+	
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -40,18 +47,4 @@ public class ItemGroup implements Serializable {
 			this.name = name.toUpperCase();
 	}
 
-	@Override
-	public int hashCode() {
-		return getId();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof ItemGroup) {
-			ItemGroup classObj = (ItemGroup) obj;
-			return classObj.getId() == id;
-		}
-
-		return false;
-	}
 }

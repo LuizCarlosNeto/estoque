@@ -21,7 +21,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	@Column(unique = true)
 	private String email;
@@ -36,11 +36,11 @@ public class User implements Serializable {
 	@ManyToOne
 	private Department department;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -94,7 +94,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return getId();
+		return getId().intValue();
 	}
 
 	@Override
