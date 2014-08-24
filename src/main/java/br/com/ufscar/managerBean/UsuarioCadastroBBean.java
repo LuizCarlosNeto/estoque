@@ -44,14 +44,14 @@ public class UsuarioCadastroBBean implements Serializable {
 	}
 	
 	public String saveUser() {
-		user.setDepartment(this.findDepartmentById(departmentSelectedId));
-		dao.save(user);
+		user.setDepartment(dao.find(Department.class, departmentSelectedId));
+		if (user.getId() != null) {
+			dao.update(user);
+		} else{
+			dao.save(user);
+		}
 		this.reset();
 		return "/pages/protected/admin/usuario/usuario-editar.xhtml";
-	}
-	
-	private Department findDepartmentById(Object entityID) {
-		return dao.find(Department.class, entityID);
 	}
 	
 	private List<String> listarTiposUsuario() {
