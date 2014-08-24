@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - openjdk7
+notifications:
+  email:
+    recipients: 
+      - aguiartiago@hotmail.com
+    on_success: change
+    on_failure: always
+branches:
+  only:
+    - master
+script:  
+  - mvn clean install
