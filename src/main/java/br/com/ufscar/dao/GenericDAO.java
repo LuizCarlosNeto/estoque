@@ -6,14 +6,16 @@ import java.util.Map.*;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+
+import br.com.ufscar.entity.Item;
  
 public class GenericDAO implements Serializable {
     private static final long serialVersionUID = 1L;
  
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistenceUnit");
-    private EntityManager em;
+    protected EntityManager em;
  
-    private void beginTransaction() {
+    protected void beginTransaction() {
         em = emf.createEntityManager();
         em.getTransaction().begin();
     }
@@ -27,7 +29,7 @@ public class GenericDAO implements Serializable {
         em.getTransaction().rollback();
     }
  
-    private void closeTransaction() {
+    protected void closeTransaction() {
         em.close();
     }
  
@@ -132,6 +134,32 @@ public class GenericDAO implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
+	public <T> T findOneResultByQuery(String namedQuery, Map<String, Object> parameters) {
+        T result = null;
+ 
+        try {
+        	this.beginTransaction();
+            Query query = em.createQuery(namedQuery);
+ 
+            // Method that will populate parameters if they are passed not null and empty
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+ 
+            result = (T) query.getSingleResult();
+            this.closeTransaction();
+ 
+        } catch (NoResultException e) {
+            System.out.println("No result found for named query: " + namedQuery);
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        }
+ 
+        return result;
+    }
+    
+    @SuppressWarnings("unchecked")
 	public <T> List<T> findResults(String namedQuery, Map<String, Object> parameters) {
     	List<T> result = null;
  
@@ -158,9 +186,23 @@ public class GenericDAO implements Serializable {
         return result;
     }
  
-    private void populateQueryParameters(Query query, Map<String, Object> parameters) {
+    protected void populateQueryParameters(Query query, Map<String, Object> parameters) {
         for (Entry<String, Object> entry : parameters.entrySet()) {
             query.setParameter(entry.getKey(), entry.getValue());
         }
     }
+    
+    public <T> List<T> findByCustomField(Class<T> clazz, String paramName, String value) {
+    	String query = "SELECT c FROM " + Item.class.getSimpleName() 
+    			+ " c WHERE c." + paramName + " = :param";
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("param", value);
+		return findResults(query, parameters);
+    }
+    
+    public <T> T findOneByCustomField(Class<T> clazz, String paramName, String value){
+    	List<T> results = findByCustomField(clazz, paramName, value);
+    	return results == null || results.isEmpty() ? null : results.get(0);
+    }
+    
 }

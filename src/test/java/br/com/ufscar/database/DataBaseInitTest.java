@@ -15,6 +15,9 @@ import br.com.ufscar.dao.ItemGroupDAO;
 import br.com.ufscar.entity.Department;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
+import br.com.ufscar.entity.ItemMovimentation;
+import br.com.ufscar.entity.ItemMovimentationDAO;
+import br.com.ufscar.entity.ItemMovimentationType;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 
@@ -32,7 +35,11 @@ public class DataBaseInitTest extends TestCase {
 	private final String IMFORMATICA = "Informática";
 	private final String ITEM = "Item1";
 	private final String[] ITEM_GROUPS = {ESCRITORIO, LIMPEZA, IMFORMATICA};
-
+	private final String ITEM_MOVIMENTATION = "Item_Movimentation";
+	private final String ITEM_MOVIMENTATION2 = "Item_Movimentation2";
+	
+	
+	
 	@Test
 	public void testeDataBaseInit() {
 
@@ -42,6 +49,7 @@ public class DataBaseInitTest extends TestCase {
 			createEmployeesAndDepartament();
 			createItemGroup();
 			createItem();
+			createItemMovimentation();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,7 +62,7 @@ public class DataBaseInitTest extends TestCase {
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[1]));
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[2]));
 		assertTrue(verificaSeExisteItem());
-		
+		assertTrue(verificaSaldo());
 	}
 
 	private void createEmployeesAndDepartament() {
@@ -198,5 +206,49 @@ public class DataBaseInitTest extends TestCase {
 
 		return !results.isEmpty() ? true : false;
 	}
+	
+	private void createItemMovimentation() {
+		if (verificaSeExisteItemMovimentation()) {
+			GenericDAO dao = new GenericDAO();
+			Item item = new Item();
+			item.setName(ITEM_MOVIMENTATION);
+			dao.save(item);
+			
+			Item item2 = new Item();
+			item2.setName(ITEM_MOVIMENTATION2);
+			dao.save(item2);
+			
+			Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION);
+			ItemMovimentation itemMovimentation = new ItemMovimentation();
+			itemMovimentation.setQuantity(3);
+			itemMovimentation.setType(ItemMovimentationType.IN);
+			itemMovimentation.setItem(itemDB);
+			dao.save(itemMovimentation);
+			
+			itemMovimentation = new ItemMovimentation();
+			itemMovimentation.setQuantity(1);
+			itemMovimentation.setType(ItemMovimentationType.OUT);
+			itemMovimentation.setItem(itemDB);
+			dao.save(itemMovimentation);
+			
+			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION2);
+			itemMovimentation = new ItemMovimentation();
+			itemMovimentation.setQuantity(2);
+			itemMovimentation.setType(ItemMovimentationType.IN);
+			itemMovimentation.setItem(itemDB2);
+			dao.save(itemMovimentation);
+		}
+	}
+	
+	private Boolean verificaSeExisteItemMovimentation() {
+		GenericDAO genericDAO = new GenericDAO();
+		List<ItemMovimentation> results = genericDAO.findByCustomField(ItemMovimentation.class, "name", ITEM_MOVIMENTATION);
+		return results.isEmpty();
+	}
 
+	private Boolean verificaSaldo() {
+		ItemMovimentationDAO dao = new ItemMovimentationDAO();
+		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION);
+		return dao.saldoItem(itemDB) == 2;
+	}
 }
