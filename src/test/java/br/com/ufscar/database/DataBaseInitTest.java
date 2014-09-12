@@ -12,6 +12,7 @@ import br.com.ufscar.controller.DepartmentController;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.dao.ItemGroupDAO;
+import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Department;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
@@ -210,6 +211,9 @@ public class DataBaseInitTest extends TestCase {
 	private void createItemMovimentation() {
 		if (verificaSeExisteItemMovimentation()) {
 			GenericDAO dao = new GenericDAO();
+			UserDAO userDAO = new UserDAO();
+			User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
+			User userClient = userDAO.findUserByEmail(USER_CLIENT+"@estoque.com");
 			Item item = new Item();
 			item.setName(ITEM_MOVIMENTATION);
 			dao.save(item);
@@ -223,12 +227,16 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(3);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB);
+			itemMovimentation.setUserAdmin(userAdmin);
+			itemMovimentation.setUserClient(userClient);
 			dao.save(itemMovimentation);
 			
 			itemMovimentation = new ItemMovimentation();
 			itemMovimentation.setQuantity(1);
 			itemMovimentation.setType(ItemMovimentationType.OUT);
 			itemMovimentation.setItem(itemDB);
+			itemMovimentation.setUserAdmin(userAdmin);
+			itemMovimentation.setUserClient(userClient);
 			dao.save(itemMovimentation);
 			
 			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION2);
@@ -236,6 +244,8 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(2);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB2);
+			itemMovimentation.setUserAdmin(userAdmin);
+			itemMovimentation.setUserClient(userClient);
 			dao.save(itemMovimentation);
 		}
 	}

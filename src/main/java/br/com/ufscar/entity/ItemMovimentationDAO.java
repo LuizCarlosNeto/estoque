@@ -12,6 +12,10 @@ import br.com.ufscar.dao.GenericDAO;
 public class ItemMovimentationDAO extends GenericDAO{
 
 	private static final long serialVersionUID = 1L;
+	
+	public ItemMovimentationDAO() {
+		super();
+	}
 
 	public Integer saldoItem(Item item) {
 		return somaIN(item).intValue() - somaOUT(item).intValue();

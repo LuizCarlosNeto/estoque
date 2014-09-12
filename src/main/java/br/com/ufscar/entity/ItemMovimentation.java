@@ -26,6 +26,12 @@ public class ItemMovimentation implements Serializable {
 	@ManyToOne
 	private Item item;
 	
+	@ManyToOne
+	private User userClient;
+	
+	@ManyToOne
+	private User userAdmin;
+	
 	public Long getId() {
 		return id;
 	}
@@ -56,6 +62,22 @@ public class ItemMovimentation implements Serializable {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+
+	public User getUserClient() {
+		return userClient;
+	}
+
+	public void setUserClient(User userClient) {
+		this.userClient = userClient;
+	}
+
+	public User getUserAdmin() {
+		return userAdmin;
+	}
+
+	public void setUserAdmin(User userAdmin) {
+		this.userAdmin = userAdmin;
 	}
 
 
