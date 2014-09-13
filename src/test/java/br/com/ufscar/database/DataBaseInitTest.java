@@ -1,5 +1,6 @@
 package br.com.ufscar.database;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,8 @@ import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.ItemMovimentation;
 import br.com.ufscar.entity.ItemMovimentationDAO;
 import br.com.ufscar.entity.ItemMovimentationType;
+import br.com.ufscar.entity.ItemOrder;
+import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 
@@ -39,6 +42,8 @@ public class DataBaseInitTest extends TestCase {
 	private final String[] ITEM_GROUPS = {ESCRITORIO, LIMPEZA, IMFORMATICA};
 	private final String ITEM_MOVIMENTATION = "Item_Movimentation";
 	private final String ITEM_MOVIMENTATION2 = "Item_Movimentation2";
+	private final String ITEM_ORDER = "Item_Movimentation_order";
+	private final String ITEM_ORDER2 = "Item_Movimentation_order2";
 	
 	
 	
@@ -52,6 +57,7 @@ public class DataBaseInitTest extends TestCase {
 			createItemGroup();
 			createItem();
 			createItemMovimentation();
+			createOrder();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,7 +71,9 @@ public class DataBaseInitTest extends TestCase {
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[2]));
 		assertTrue(verificaSeExisteItem());
 		assertTrue(verificaSaldo());
+		assertTrue(!verificaSeExisteOrder());
 	}
+
 
 	private void createEmployeesAndDepartament() {
 		Department department = new Department(DEPARTMENT);
@@ -212,9 +220,6 @@ public class DataBaseInitTest extends TestCase {
 	private void createItemMovimentation() {
 		if (verificaSeExisteItemMovimentation()) {
 			GenericDAO dao = new GenericDAO();
-			UserDAO userDAO = new UserDAO();
-			User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
-			User userClient = userDAO.findUserByEmail(USER_CLIENT+"@estoque.com");
 			Item item = new Item();
 			item.setName(ITEM_MOVIMENTATION);
 			dao.save(item);
@@ -228,18 +233,12 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(3);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB);
-			itemMovimentation.setUserAdmin(userAdmin);
-			itemMovimentation.setUserClient(userClient);
-			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 			
 			itemMovimentation = new ItemMovimentation();
 			itemMovimentation.setQuantity(1);
 			itemMovimentation.setType(ItemMovimentationType.OUT);
 			itemMovimentation.setItem(itemDB);
-			itemMovimentation.setUserAdmin(userAdmin);
-			itemMovimentation.setUserClient(userClient);
-			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 			
 			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION2);
@@ -247,9 +246,6 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(2);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB2);
-			itemMovimentation.setUserAdmin(userAdmin);
-			itemMovimentation.setUserClient(userClient);
-			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 		}
 	}
@@ -264,5 +260,47 @@ public class DataBaseInitTest extends TestCase {
 		ItemMovimentationDAO dao = new ItemMovimentationDAO();
 		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION);
 		return dao.saldoItem(itemDB) == 2;
+	}
+	
+	public void createOrder() {
+		if(verificaSeExisteOrder()) {
+			GenericDAO dao = new GenericDAO();
+			UserDAO userDAO = new UserDAO();
+			User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
+			User userClient = userDAO.findUserByEmail(USER_CLIENT+"@estoque.com");
+			Item item = new Item();
+			item.setName(ITEM_ORDER);
+			dao.save(item);
+			
+			Item item2 = new Item();
+			item2.setName(ITEM_ORDER2);
+			dao.save(item2);
+	
+			Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM_ORDER);
+			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_ORDER2);
+			
+			ItemOrder itemOrder1 = new ItemOrder();
+			itemOrder1.setItem(itemDB);
+			itemOrder1.setQuantity(2);
+			
+			ItemOrder itemOrder2 = new ItemOrder();
+			itemOrder2.setItem(itemDB2);
+			itemOrder2.setQuantity(3);
+			
+			Orderr order = new Orderr();
+			order.setDate(new Date());
+			order.setItems(new ArrayList<ItemOrder>());
+			order.getItems().add(itemOrder1);
+			order.getItems().add(itemOrder2);
+			order.setUserAdmin(userAdmin);
+			order.setUserClient(userClient);
+			dao.save(order);
+		}
+	}
+	
+	private boolean verificaSeExisteOrder() {
+		GenericDAO genericDAO = new GenericDAO();
+		List<Orderr> results = genericDAO.findAll(Orderr.class);
+		return results.isEmpty();
 	}
 }
