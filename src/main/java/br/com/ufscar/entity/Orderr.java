@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Orderr implements Serializable{
 	
 	private Date date;
 	
-	@OneToMany(mappedBy="orderr")
+	@OneToMany(mappedBy="orderr",cascade=CascadeType.PERSIST)
 	private List<ItemOrder> Items;
 
 	@ManyToOne
