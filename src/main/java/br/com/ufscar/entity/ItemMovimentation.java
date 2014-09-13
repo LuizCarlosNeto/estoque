@@ -1,6 +1,7 @@
 package br.com.ufscar.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,8 @@ public class ItemMovimentation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	private Date date;
 
 	private Integer quantity;
 	
@@ -31,6 +34,9 @@ public class ItemMovimentation implements Serializable {
 	
 	@ManyToOne
 	private User userAdmin;
+	
+	@ManyToOne
+	private Order order;
 	
 	public Long getId() {
 		return id;
@@ -78,6 +84,14 @@ public class ItemMovimentation implements Serializable {
 
 	public void setUserAdmin(User userAdmin) {
 		this.userAdmin = userAdmin;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 

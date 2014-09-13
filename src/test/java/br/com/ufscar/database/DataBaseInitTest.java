@@ -1,5 +1,6 @@
 package br.com.ufscar.database;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,6 +230,7 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setItem(itemDB);
 			itemMovimentation.setUserAdmin(userAdmin);
 			itemMovimentation.setUserClient(userClient);
+			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 			
 			itemMovimentation = new ItemMovimentation();
@@ -237,6 +239,7 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setItem(itemDB);
 			itemMovimentation.setUserAdmin(userAdmin);
 			itemMovimentation.setUserClient(userClient);
+			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 			
 			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION2);
@@ -246,6 +249,7 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setItem(itemDB2);
 			itemMovimentation.setUserAdmin(userAdmin);
 			itemMovimentation.setUserClient(userClient);
+			itemMovimentation.setDate(new Date());
 			dao.save(itemMovimentation);
 		}
 	}
