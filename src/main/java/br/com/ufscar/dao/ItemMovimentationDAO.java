@@ -1,6 +1,7 @@
 package br.com.ufscar.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.NoResultException;
@@ -68,6 +69,16 @@ public class ItemMovimentationDAO extends GenericDAO{
         }
 		
 		return result;
+	}
+	
+	public List<ItemMovimentation> listItemMovimentationByItem(Item item) {
+		String queryStr = "SELECT c FROM " + ItemMovimentation.class.getSimpleName() 
+				+ " c WHERE c.item = :item";
+		
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("item", item);
+		
+		return findResults(queryStr, parameters);
 	}
 	
 }

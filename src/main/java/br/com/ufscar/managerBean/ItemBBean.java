@@ -1,7 +1,6 @@
 package br.com.ufscar.managerBean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +8,10 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.ufscar.dao.GenericDAO;
+import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
-import br.com.ufscar.entity.Role;
+import br.com.ufscar.entity.ItemMovimentation;
 
 
 @SessionScoped
@@ -22,9 +21,10 @@ public class ItemBBean implements Serializable {
 
 	private Item item;
 	private Map<String,Long> itensGroup;
-	private GenericDAO dao;
+	private ItemMovimentationDAO dao;
 	private Long itemGroupSelectedId;
 	List<String> itemGroups; 
+	private ItemMovimentation itemMovimentation;
 
 	public ItemBBean() {
 		super();
@@ -32,7 +32,7 @@ public class ItemBBean implements Serializable {
 	}
 	
 	private void init() {
-		dao = new GenericDAO();
+		dao = new ItemMovimentationDAO();
 		item = new Item();
 		itemGroupSelectedId = null;
 	}
@@ -80,6 +80,15 @@ public class ItemBBean implements Serializable {
 		return "/pages/protected/admin/item/item-cadastro.xhtml";
 	}
 	
+	public String movimentationItem() {
+		
+		return "/pages/protected/admin/item/movimentacao-item-listar.xhtml";
+	}
+	
+	public List<ItemMovimentation> getListItemMovimentations() {
+		return dao.listItemMovimentationByItem(item);
+	}
+	
 	//getters and setters 
 
 	public Item getItem() {
@@ -112,6 +121,14 @@ public class ItemBBean implements Serializable {
 	
 	public void setItemGroups(List<String> itemGroups) {
 		this.itemGroups = itemGroups;
+	}
+
+	public ItemMovimentation getItemMovimentation() {
+		return itemMovimentation;
+	}
+
+	public void setItemMovimentation(ItemMovimentation itemMovimentation) {
+		this.itemMovimentation = itemMovimentation;
 	}
 	
 }

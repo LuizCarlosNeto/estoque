@@ -160,12 +160,12 @@ public class GenericDAO implements Serializable {
     }
     
     @SuppressWarnings("unchecked")
-	public <T> List<T> findResults(String namedQuery, Map<String, Object> parameters) {
+	public <T> List<T> findResults(String queryStr, Map<String, Object> parameters) {
     	List<T> result = null;
  
         try {
         	this.beginTransaction();
-            Query query = em.createQuery(namedQuery);
+            Query query = em.createQuery(queryStr);
  
             // Method that will populate parameters if they are passed not null and empty
             if (parameters != null && !parameters.isEmpty()) {
@@ -175,7 +175,7 @@ public class GenericDAO implements Serializable {
             result = (List<T>)query.getResultList();
  
         } catch (NoResultException e) {
-            System.out.println("No result found for named query: " + namedQuery);
+            System.out.println("No result found for named query: " + queryStr);
         } catch (Exception e) {
             System.out.println("Error while running query: " + e.getMessage());
             e.printStackTrace();
