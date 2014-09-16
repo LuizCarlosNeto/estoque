@@ -30,6 +30,9 @@ public class ItemMovimentation implements Serializable {
 	private Item item;
 	
 	@ManyToOne
+	private User userAdmin;
+
+	@ManyToOne
 	private Orderr order;
 	
 	public Long getId() {
@@ -71,6 +74,21 @@ public class ItemMovimentation implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
+	public User getUserAdmin() {
+		return userAdmin;
+	}
+	
+	public void setUserAdmin(User userAdmin) {
+		this.userAdmin = userAdmin;
+	}
+	
+	public Orderr getOrder() {
+		return order;
+	}
+	
+	public void setOrder(Orderr order) {
+		this.order = order;
+	}
 
 }

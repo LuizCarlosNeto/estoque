@@ -1,51 +1,36 @@
 package br.com.ufscar.database;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
+import br.com.ufscar.BaseTest;
 import br.com.ufscar.controller.DepartmentController;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.dao.ItemGroupDAO;
+import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Department;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.ItemMovimentation;
-import br.com.ufscar.entity.ItemMovimentationDAO;
 import br.com.ufscar.entity.ItemMovimentationType;
 import br.com.ufscar.entity.ItemOrder;
 import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 
-public class DataBaseInitTest extends TestCase {
+public class DataBaseInitTest extends BaseTest{
 
 	DepartmentController departmentController = new DepartmentController();
 	UserController userController = new UserController();
-
-	private final String DEPARTMENT = "department1";
-	private final String EMPLOYEE = "employee1";
-	private final String USER_ADMIN = "admin1";
-	private final String USER_CLIENT = "userClient1";
-	private final String ESCRITORIO = "Escritório";
-	private final String LIMPEZA = "Limpeza";
-	private final String IMFORMATICA = "Informática";
-	private final String ITEM = "Item1";
-	private final String[] ITEM_GROUPS = {ESCRITORIO, LIMPEZA, IMFORMATICA};
-	private final String ITEM_MOVIMENTATION = "Item_Movimentation";
-	private final String ITEM_MOVIMENTATION2 = "Item_Movimentation2";
-	private final String ITEM_ORDER = "Item_Movimentation_order";
-	private final String ITEM_ORDER2 = "Item_Movimentation_order2";
-	
-	
 	
 	@Test
 	public void testeDataBaseInit() {
@@ -220,6 +205,8 @@ public class DataBaseInitTest extends TestCase {
 	private void createItemMovimentation() {
 		if (verificaSeExisteItemMovimentation()) {
 			GenericDAO dao = new GenericDAO();
+			UserDAO userDAO = new UserDAO();
+			User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
 			Item item = new Item();
 			item.setName(ITEM_MOVIMENTATION);
 			dao.save(item);
@@ -233,12 +220,14 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(3);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB);
+			itemMovimentation.setUserAdmin(userAdmin);
 			dao.save(itemMovimentation);
 			
 			itemMovimentation = new ItemMovimentation();
 			itemMovimentation.setQuantity(1);
 			itemMovimentation.setType(ItemMovimentationType.OUT);
 			itemMovimentation.setItem(itemDB);
+			itemMovimentation.setUserAdmin(userAdmin);
 			dao.save(itemMovimentation);
 			
 			Item itemDB2 = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION2);
@@ -246,6 +235,7 @@ public class DataBaseInitTest extends TestCase {
 			itemMovimentation.setQuantity(2);
 			itemMovimentation.setType(ItemMovimentationType.IN);
 			itemMovimentation.setItem(itemDB2);
+			itemMovimentation.setUserAdmin(userAdmin);
 			dao.save(itemMovimentation);
 		}
 	}

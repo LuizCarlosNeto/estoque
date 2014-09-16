@@ -1,4 +1,4 @@
-package br.com.ufscar.entity;
+package br.com.ufscar.dao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.ufscar.dao.GenericDAO;
+import br.com.ufscar.entity.Item;
+import br.com.ufscar.entity.ItemMovimentation;
+import br.com.ufscar.entity.ItemMovimentationType;
 
 
 public class ItemMovimentationDAO extends GenericDAO{
@@ -50,6 +53,10 @@ public class ItemMovimentationDAO extends GenericDAO{
             }
  
             result = (Number)query.getSingleResult();
+            
+            if (result == null) {
+            	result = 0;
+            }
  
         } catch (NoResultException e) {
             System.out.println("No result found for named query: " + queryStr);
