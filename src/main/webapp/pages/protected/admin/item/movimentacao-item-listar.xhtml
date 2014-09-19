@@ -13,7 +13,17 @@
 				<p:separator />
 				<h:form id="form" >
 				    <p:panel header="Movimentação do Item" style="margin-bottom:10px;">
+				    	<p:panelGrid columns="3">
+					    	<p:inputText placeholder="Quantidade:" value="#{itemBBean.quantity}" rendered="true"/>
+					    	<p:commandButton icon="ui-icon-circle-arrow-n" value="Entrada" action="#{itemBBean.registrarEntrada}" update="entityDT"/>
+					    	<p:commandButton icon="ui-icon-circle-arrow-s" value="Saída" action="#{itemBBean.registrarSaida}" update="entityDT"/>
+				    	</p:panelGrid>
 						<p:dataTable id="entityDT" var="ItemMovimentationTable" value="#{itemBBean.listItemMovimentations}" selection="#{itemBBean.itemMovimentation}" rowKey="#{ItemMovimentationTable.id}">
+					        
+					        <f:facet name="header">
+					        	<h:outputText value="Saldo: #{itemBBean.saldo}" />
+					        </f:facet>
+					        
 					        <p:column selectionMode="single" style="width:16px;text-align:center"/>
 					        
 					        <p:column headerText="Id">

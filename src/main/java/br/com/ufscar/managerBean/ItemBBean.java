@@ -8,10 +8,13 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.ufscar.controller.ItemMovimentationController;
 import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.ItemMovimentation;
+import br.com.ufscar.exception.QuantityNotAvailableException;
+import br.com.ufscar.util.UserSessionUtil;
 
 
 @SessionScoped
@@ -25,6 +28,7 @@ public class ItemBBean implements Serializable {
 	private Long itemGroupSelectedId;
 	List<String> itemGroups; 
 	private ItemMovimentation itemMovimentation;
+	private Integer quantity;
 
 	public ItemBBean() {
 		super();
@@ -35,6 +39,7 @@ public class ItemBBean implements Serializable {
 		dao = new ItemMovimentationDAO();
 		item = new Item();
 		itemGroupSelectedId = null;
+		quantity = null;
 	}
 	
 	private void reset() {
@@ -89,6 +94,37 @@ public class ItemBBean implements Serializable {
 		return dao.listItemMovimentationByItem(item);
 	}
 	
+	public Integer getSaldo() {
+		System.out.println(item.getName());
+		return dao.saldoItem(item);
+	}
+	
+	public String registrarEntrada() {
+		ItemMovimentationController controller = new ItemMovimentationController();
+		try {
+			controller.entrada(UserSessionUtil.getUserFromSession(), item, quantity, null);
+			return "";
+		} catch (QuantityNotAvailableException e) {
+			// TODO mensagem de alerta
+			e.printStackTrace();
+			return "";
+		}
+		
+	}
+	
+	public String registrarSaida() {
+		ItemMovimentationController controller = new ItemMovimentationController();
+		try {
+			controller.saida(UserSessionUtil.getUserFromSession(), item, quantity, null);
+			return "";
+		} catch (QuantityNotAvailableException e) {
+			// TODO mensagem de alerta
+			e.printStackTrace();
+			return "";
+		} 
+	}
+	
+	
 	//getters and setters 
 
 	public Item getItem() {
@@ -129,6 +165,14 @@ public class ItemBBean implements Serializable {
 
 	public void setItemMovimentation(ItemMovimentation itemMovimentation) {
 		this.itemMovimentation = itemMovimentation;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	
 }

@@ -14,7 +14,7 @@ import br.com.ufscar.exception.QuantityNotAvailableException;
 public class ItemMovimentationControllerTest extends BaseTest{
 
 	@Test
-	public void testeEntrada() {
+	public void testeEntrada() throws QuantityNotAvailableException {
 		ItemMovimentationDAO dao = new ItemMovimentationDAO();
 		UserDAO userDAO = new UserDAO();
 		User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
@@ -26,6 +26,18 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		Integer saldoDepois = dao.saldoItem(itemDB);
 		
 		assertTrue(saldoAntes + 2 == saldoDepois);
+	}
+	
+	@Test(expected=QuantityNotAvailableException.class)
+	public void testeEntradaQuantidadeNula() throws QuantityNotAvailableException {
+		ItemMovimentationDAO dao = new ItemMovimentationDAO();
+		UserDAO userDAO = new UserDAO();
+		User userAdmin = userDAO.findUserByEmail(USER_ADMIN+"@estoque.com");
+		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM);
+		ItemMovimentationController controller = new ItemMovimentationController();
+		
+		controller.entrada(userAdmin, itemDB, null, null);
+		
 	}
 	
 	@Test

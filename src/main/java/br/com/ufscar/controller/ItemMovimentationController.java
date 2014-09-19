@@ -13,17 +13,21 @@ import br.com.ufscar.exception.QuantityNotAvailableException;
 
 public class ItemMovimentationController {
 
-	public void entrada(User user, Item item, Integer quantity, Orderr order) {
-		ItemMovimentation itemMovimentation = new ItemMovimentation();
-		itemMovimentation.setItem(item);
-		itemMovimentation.setQuantity(quantity);
-		itemMovimentation.setDate(new Date());
-		itemMovimentation.setType(ItemMovimentationType.IN);
-		itemMovimentation.setUserAdmin(user);
-		if (order != null) itemMovimentation.setOrder(order);
-		
+	public void entrada(User user, Item item, Integer quantity, Orderr order) throws QuantityNotAvailableException {
 		GenericDAO dao = new GenericDAO();
-		dao.save(itemMovimentation);
+		if (quantity == null || quantity < 1 ) {
+			throw new QuantityNotAvailableException();
+		} else {
+			ItemMovimentation itemMovimentation = new ItemMovimentation();
+			itemMovimentation.setItem(item);
+			itemMovimentation.setQuantity(quantity);
+			itemMovimentation.setDate(new Date());
+			itemMovimentation.setType(ItemMovimentationType.IN);
+			itemMovimentation.setUserAdmin(user);
+			if (order != null) itemMovimentation.setOrder(order);
+			
+			dao.save(itemMovimentation);
+		}
 	}
 	
 	public void saida(User user, Item item, Integer quantity, Orderr order) throws QuantityNotAvailableException {
