@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import br.com.ufscar.enums.ItemMovimentationType;
+
 @Entity
 public class ItemMovimentation implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -32,9 +34,6 @@ public class ItemMovimentation implements Serializable {
 	@ManyToOne
 	private User userAdmin;
 
-	@ManyToOne
-	private Orderr order;
-	
 	public Long getId() {
 		return id;
 	}
@@ -83,12 +82,4 @@ public class ItemMovimentation implements Serializable {
 		this.userAdmin = userAdmin;
 	}
 	
-	public Orderr getOrder() {
-		return order;
-	}
-	
-	public void setOrder(Orderr order) {
-		this.order = order;
-	}
-
 }

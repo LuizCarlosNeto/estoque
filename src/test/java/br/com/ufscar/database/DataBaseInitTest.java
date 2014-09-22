@@ -15,17 +15,16 @@ import br.com.ufscar.controller.DepartmentController;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.dao.ItemGroupDAO;
-import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Department;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.ItemMovimentation;
-import br.com.ufscar.entity.ItemMovimentationType;
 import br.com.ufscar.entity.ItemOrder;
 import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
+import br.com.ufscar.enums.ItemMovimentationType;
 
 public class DataBaseInitTest extends BaseTest{
 
@@ -55,7 +54,6 @@ public class DataBaseInitTest extends BaseTest{
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[1]));
 		assertTrue(verificaSeExisteItemGroup(ITEM_GROUPS[2]));
 		assertTrue(verificaSeExisteItem());
-		assertTrue(verificaSaldo());
 		assertTrue(!verificaSeExisteOrder());
 	}
 
@@ -244,12 +242,6 @@ public class DataBaseInitTest extends BaseTest{
 		GenericDAO genericDAO = new GenericDAO();
 		List<ItemMovimentation> results = genericDAO.findByCustomField(ItemMovimentation.class, "name", ITEM_MOVIMENTATION);
 		return results.isEmpty();
-	}
-
-	private Boolean verificaSaldo() {
-		ItemMovimentationDAO dao = new ItemMovimentationDAO();
-		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM_MOVIMENTATION);
-		return dao.saldoItem(itemDB) == 2;
 	}
 	
 	public void createOrder() {

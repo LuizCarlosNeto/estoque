@@ -102,7 +102,7 @@ public class ItemBBean implements Serializable {
 	public String registrarEntrada() {
 		ItemMovimentationController controller = new ItemMovimentationController();
 		try {
-			controller.entrada(UserSessionUtil.getUserFromSession(), item, quantity, null);
+			controller.entrada(UserSessionUtil.getUserFromSession(), item, quantity);
 			return "";
 		} catch (QuantityNotAvailableException e) {
 			// TODO mensagem de alerta
@@ -115,7 +115,7 @@ public class ItemBBean implements Serializable {
 	public String registrarSaida() {
 		ItemMovimentationController controller = new ItemMovimentationController();
 		try {
-			controller.saida(UserSessionUtil.getUserFromSession(), item, quantity, null);
+			controller.saida(UserSessionUtil.getUserFromSession(), item, quantity);
 			return "";
 		} catch (QuantityNotAvailableException e) {
 			// TODO mensagem de alerta

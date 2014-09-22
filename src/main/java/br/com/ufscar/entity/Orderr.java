@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import br.com.ufscar.enums.OrderStatus;
 
 @Entity
 public class Orderr implements Serializable{
@@ -31,6 +35,9 @@ public class Orderr implements Serializable{
 
 	@ManyToOne
 	private User userClient;
+	
+	@Enumerated(EnumType.STRING)
+	private OrderStatus status;
 	
 	public Long getId() {
 		return id;
@@ -70,6 +77,18 @@ public class Orderr implements Serializable{
 
 	public void setUserClient(User userClient) {
 		this.userClient = userClient;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setAsDelivered() {
+		status = OrderStatus.DELIVERED;
+	}
+
+	public void setAsPacking() {
+		status = OrderStatus.PACKING;
 	}
 	
 	

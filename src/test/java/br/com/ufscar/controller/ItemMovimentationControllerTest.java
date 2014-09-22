@@ -22,7 +22,7 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		ItemMovimentationController controller = new ItemMovimentationController();
 		
 		Integer saldoAntes = dao.saldoItem(itemDB);
-		controller.entrada(userAdmin, itemDB, 2, null);
+		controller.entrada(userAdmin, itemDB, 2);
 		Integer saldoDepois = dao.saldoItem(itemDB);
 		
 		assertTrue(saldoAntes + 2 == saldoDepois);
@@ -36,7 +36,7 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM);
 		ItemMovimentationController controller = new ItemMovimentationController();
 		
-		controller.entrada(userAdmin, itemDB, null, null);
+		controller.entrada(userAdmin, itemDB, null);
 		
 	}
 	
@@ -49,8 +49,10 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		Item itemDB = dao.findOneByCustomField(Item.class, "name", ITEM);
 		ItemMovimentationController controller = new ItemMovimentationController();
 		
+		controller.entrada(userAdmin, itemDB, 2);
+		
 		Integer saldoAntes = dao.saldoItem(itemDB);
-		controller.saida(userAdmin, itemDB, 2, null);
+		controller.saida(userAdmin, itemDB, 2);
 		Integer saldoDepois = dao.saldoItem(itemDB);
 		
 		assertTrue(saldoAntes - 2 == saldoDepois);
@@ -67,7 +69,7 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		ItemMovimentationController controller = new ItemMovimentationController();
 		
 		Integer saldoAntes = dao.saldoItem(itemDB);
-		controller.saida(userAdmin, itemDB, saldoAntes + 1, null);
+		controller.saida(userAdmin, itemDB, saldoAntes + 1);
 		
 	}
 }

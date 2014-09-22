@@ -7,10 +7,9 @@ import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemMovimentation;
-import br.com.ufscar.entity.ItemMovimentationType;
+import br.com.ufscar.enums.ItemMovimentationType;
 
 
 public class ItemMovimentationDAO extends GenericDAO{
