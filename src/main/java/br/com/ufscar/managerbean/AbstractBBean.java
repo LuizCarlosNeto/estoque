@@ -1,13 +1,13 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import org.primefaces.context.RequestContext;
 
 import br.com.ufscar.util.JSFMessageUtil;
 
-public class AbstractMB {
+public class AbstractBBean {
 	private static final String KEEP_DIALOG_OPENED = "KEEP_DIALOG_OPENED";
 
-	public AbstractMB() {
+	public AbstractBBean() {
 		super();
 	}
 

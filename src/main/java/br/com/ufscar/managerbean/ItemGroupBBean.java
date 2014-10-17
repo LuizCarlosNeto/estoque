@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +13,6 @@ import br.com.ufscar.entity.ItemGroup;
 @SessionScoped
 @ManagedBean
 public class ItemGroupBBean implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	private ItemGroup itemGroup;
 	private ItemGroupDAO dao;

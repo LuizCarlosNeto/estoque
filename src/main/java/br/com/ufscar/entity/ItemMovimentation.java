@@ -15,7 +15,6 @@ import br.com.ufscar.enums.ItemMovimentationType;
 
 @Entity
 public class ItemMovimentation implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

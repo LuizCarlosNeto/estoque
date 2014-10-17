@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQuery(name = "User.findUserByEmail", query = "select u from User u where u.email = :email")
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_BY_EMAIL = "User.findUserByEmail";
 

@@ -13,8 +13,6 @@ import br.com.ufscar.enums.ItemMovimentationType;
 
 
 public class ItemMovimentationDAO extends GenericDAO{
-
-	private static final long serialVersionUID = 1L;
 	
 	public ItemMovimentationDAO() {
 		super();

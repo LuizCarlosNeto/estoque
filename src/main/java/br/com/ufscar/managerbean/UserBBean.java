@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
 
@@ -12,15 +12,14 @@ import br.com.ufscar.entity.User;
 
 
 @SessionScoped
-@ManagedBean(name="userMB")
-public class UserMB implements Serializable {
-	public static final String INJECTION_NAME = "#{userMB}";
-	private static final long serialVersionUID = 1L;
+@ManagedBean(name="userBBean")
+public class UserBBean implements Serializable {
+	public static final String INJECTION_NAME = "#{userBBean}";
 
 	private User user;
 	UserController userController;
 	
-	public UserMB() {
+	public UserBBean() {
 		super();
 		this.init();
 	}

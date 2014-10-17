@@ -1,7 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	
 <h:head>
 </h:head>
 <h:body>
@@ -9,20 +14,20 @@
 	<h:form>
 		<p:growl showDetail="false" life="3000" />
 		<p:panel header="#{bundle.loginHello}" style="margin-bottom:10px;">
-			<h:panelGrid columns="2">
+			<p:panelGrid columns="2">
 				<p:outputLabel value="#{bundle.loginEmail}" />
-				<p:inputText value="#{loginMB.email}" label="Email" id="email" required="true">
+				<p:inputText value="#{loginBBean.email}" label="Email" id="email" required="true">
 					<f:validateLength minimum="6" />
 				</p:inputText>
 				<p:outputLabel value="#{bundle.loginPassword}" />
 				
-				<h:inputSecret value="#{loginMB.password}" label="Password" id="senha" required="true" autocomplete="off" >
+				<h:inputSecret value="#{loginBBean.password}" label="Password" id="senha" required="true" autocomplete="off" >
 					<f:validateLength minimum="6" />
 				</h:inputSecret>
-			</h:panelGrid>
+			</p:panelGrid>
 		</p:panel>
 		<p:separator />
-		<p:commandButton action="#{loginMB.login}" value="Log in" ajax="false" />
+		<p:commandButton action="#{loginBBean.login}" value="Log in" ajax="false" />
 	</h:form>
 </h:body>
 </html>

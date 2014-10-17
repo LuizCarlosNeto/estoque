@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import java.util.List;
 

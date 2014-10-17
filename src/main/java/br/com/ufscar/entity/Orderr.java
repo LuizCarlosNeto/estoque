@@ -19,8 +19,6 @@ import br.com.ufscar.enums.OrderStatus;
 @Entity
 public class Orderr implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

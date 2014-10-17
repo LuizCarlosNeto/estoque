@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import br.com.ufscar.entity.User;
 @SessionScoped
 @ManagedBean
 public class UsuarioCadastroBBean implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	private User user;
 	private List<String> tipos;

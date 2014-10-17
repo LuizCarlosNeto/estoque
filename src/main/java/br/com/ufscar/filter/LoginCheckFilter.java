@@ -35,6 +35,7 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			allowedURIs.add("/estoque/javax.faces.resource/primefaces.css.xhtml");
 			allowedURIs.add("/estoque/javax.faces.resource/jquery/jquery.js.xhtml");
 			allowedURIs.add("/estoque/javax.faces.resource/messages/messages.png.xhtml");
+			allowedURIs.add("/estoque/javax.faces.resource/jquery/jquery-plugins.js.xhtml");
 			allowedURIs.add("/estoque/javax.faces.resource/images/ui-icons_2e83ff_256x240.png.xhtml");
 			allowedURIs.add("/estoque/javax.faces.resource/images/ui-icons_38667f_256x240.png.xhtml");
 		}

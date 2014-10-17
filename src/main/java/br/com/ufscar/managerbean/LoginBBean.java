@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -6,15 +6,15 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import br.com.ufscar.managerBean.UserMB;
+import br.com.ufscar.managerbean.UserBBean;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.entity.User;
 
 @RequestScoped
 @ManagedBean
-public class LoginMB extends AbstractMB {
-	@ManagedProperty(value = UserMB.INJECTION_NAME)
-	private UserMB userMB;
+public class LoginBBean extends AbstractBBean {
+	@ManagedProperty(value = UserBBean.INJECTION_NAME)
+	private UserBBean userMB;
 
 	private String email;
 	private String password;
@@ -53,7 +53,7 @@ public class LoginMB extends AbstractMB {
 		return null;
 	}
 
-	public void setUserMB(UserMB userMB) {
+	public void setUserMB(UserBBean userMB) {
 		this.userMB = userMB;
 	}	
 }

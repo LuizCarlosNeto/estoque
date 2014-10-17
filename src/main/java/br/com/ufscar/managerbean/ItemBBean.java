@@ -1,4 +1,4 @@
-package br.com.ufscar.managerBean;
+package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -20,7 +20,6 @@ import br.com.ufscar.util.UserSessionUtil;
 @SessionScoped
 @ManagedBean
 public class ItemBBean implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	private Item item;
 	private Map<String,Long> itensGroup;

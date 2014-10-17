@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQuery(name = "ItemGroup.findItemGroupByName", query = "SELECT ig FROM ItemGroup ig WHERE UPPER(ig.name) = UPPER(:name)")
 public class ItemGroup implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 	public static final String FIND_BY_NAME = "ItemGroup.findItemGroupByName";
 

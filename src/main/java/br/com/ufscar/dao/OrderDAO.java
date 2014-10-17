@@ -9,8 +9,6 @@ import br.com.ufscar.entity.User;
 
 
 public class OrderDAO extends GenericDAO{
-
-	private static final long serialVersionUID = 1L;
 	
 	public OrderDAO() {
 		super();

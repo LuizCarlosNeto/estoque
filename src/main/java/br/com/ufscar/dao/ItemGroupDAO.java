@@ -8,8 +8,6 @@ import br.com.ufscar.entity.User;
 
 public class ItemGroupDAO extends GenericDAO{
 
-	private static final long serialVersionUID = 1L;
-
 	public ItemGroupDAO() {
 		super();
 	}
