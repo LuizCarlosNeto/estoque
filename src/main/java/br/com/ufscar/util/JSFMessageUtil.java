@@ -5,21 +5,25 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 public class JSFMessageUtil {
-	public void sendInfoMessageToUser(String message) {
+	
+	private JSFMessageUtil() {
+	}
+	
+	public static void sendInfoMessageToUser(String message) {
 		FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_INFO, message);
 		addMessageToJsfContext(facesMessage);
 	}
 
-	public void sendErrorMessageToUser(String message) {
+	public static void sendErrorMessageToUser(String message) {
 		FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_WARN, message);
 		addMessageToJsfContext(facesMessage);
 	}
 
-	private FacesMessage createMessage(Severity severity, String mensagemErro) {
+	private static FacesMessage createMessage(Severity severity, String mensagemErro) {
 		return new FacesMessage(severity, mensagemErro, mensagemErro);
 	}
 
-	private void addMessageToJsfContext(FacesMessage facesMessage) {
+	private static void addMessageToJsfContext(FacesMessage facesMessage) {
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
 }

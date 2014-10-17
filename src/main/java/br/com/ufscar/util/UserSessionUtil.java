@@ -7,6 +7,9 @@ import br.com.ufscar.entity.User;
 
 public class UserSessionUtil {
 
+	private UserSessionUtil(){
+	}
+	
 	public static User getUserFromSession() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();

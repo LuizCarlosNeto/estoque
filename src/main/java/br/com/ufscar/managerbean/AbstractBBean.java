@@ -12,13 +12,11 @@ public class AbstractBBean {
 	}
 
 	protected void displayErrorMessageToUser(String message) {
-		JSFMessageUtil messageUtil = new JSFMessageUtil();
-		messageUtil.sendErrorMessageToUser(message);
+		 JSFMessageUtil.sendErrorMessageToUser(message);
 	}
 	
 	protected void displayInfoMessageToUser(String message) {
-		JSFMessageUtil messageUtil = new JSFMessageUtil();
-		messageUtil.sendInfoMessageToUser(message);
+		 JSFMessageUtil.sendInfoMessageToUser(message);
 	}
 	
 	protected void closeDialog(){

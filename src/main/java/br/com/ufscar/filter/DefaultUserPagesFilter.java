@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import br.com.ufscar.entity.User;
 
@@ -23,10 +24,11 @@ public class DefaultUserPagesFilter extends AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
 		User user = (User) req.getSession(true).getAttribute("user");
 
 		if(!user.isUser() && !user.isAdmin()){
-			accessDenied(request, response, req);
+			accessDenied(req, resp);
 			return;
 		}
 
