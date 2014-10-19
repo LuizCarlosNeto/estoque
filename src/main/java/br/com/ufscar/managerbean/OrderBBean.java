@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.com.ufscar.controller.OrderController;
 import br.com.ufscar.dao.UserDAO;
@@ -39,17 +42,17 @@ public class OrderBBean implements Serializable {
 	private User getUserLogged() {
 		try {
 			// TODO: verificar
-			return dao.findUserByEmail("userClient1@estoque.com");
-//			return (User) getRequest().getAttribute("user");
+//			return dao.findUserByEmail("userClient1@estoque.com");
+			return (User) getSession().getAttribute("user");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-//	private HttpServletRequest getRequest() {
-//		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//	}
+	private HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	}
 	
 	
 	//getters and setters 

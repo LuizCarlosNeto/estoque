@@ -4,9 +4,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import br.com.ufscar.managerbean.UserBBean;
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.entity.User;
 
@@ -43,8 +42,8 @@ public class LoginBBean extends AbstractBBean {
 		if(user != null){
 			userMB.setUser(user);
 			FacesContext context = FacesContext.getCurrentInstance();
-			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-			request.getSession().setAttribute("user", user);
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+			session.setAttribute("user", user);
 			return "/pages/protected/index.xhtml";
 		}
 

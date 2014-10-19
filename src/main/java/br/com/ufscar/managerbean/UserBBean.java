@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.com.ufscar.controller.UserController;
 import br.com.ufscar.entity.User;
@@ -38,7 +38,7 @@ public class UserBBean implements Serializable {
 	}
 
 	public String logOut() {
-		getRequest().getSession().invalidate();
+		getSession().invalidate();
 		return "/pages/public/login.xhtml";
 	}
 
@@ -50,13 +50,13 @@ public class UserBBean implements Serializable {
 		this.user = user;
 	}
 	
-	private HttpServletRequest getRequest() {
-		return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	private HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 	}
 
 	public User getUserLogged() {
 		try {
-			return (User) getRequest().getAttribute("user");
+			return (User) getSession().getAttribute("user");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

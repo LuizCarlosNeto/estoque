@@ -8,6 +8,7 @@ import java.util.Map;
 
 import br.com.ufscar.dao.GenericDAO;
 import br.com.ufscar.dao.OrderDAO;
+import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.ItemOrder;
 import br.com.ufscar.entity.Orderr;
@@ -18,6 +19,7 @@ public class OrderController {
 	
 	private GenericDAO dao;
 	private OrderDAO orderDAO;
+	private UserDAO userDAO;
 	private Map<Long, Integer> preOrdem;
 	private ItemMovimentationController itemController;
 
@@ -26,6 +28,7 @@ public class OrderController {
 		orderDAO = new OrderDAO();
 		preOrdem = new HashMap<>();
 		itemController = new ItemMovimentationController();
+		userDAO = new UserDAO();
 	}
 	
 	public void createOrder(User userAdmin, User userClient) throws QuantityNotAvailableException {
@@ -62,7 +65,7 @@ public class OrderController {
 	}
 	
 	public List<Orderr> ordersByClient(User userClient) {
-		return orderDAO.listOrderByClient(userClient);
+		return orderDAO.listOrderByClient(userDAO.findUserByEmail(userClient.getEmail()));
 	}
 	
 }
