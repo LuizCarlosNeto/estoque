@@ -12,8 +12,55 @@
 			<ui:define name="content">
 				<p:separator />
 				<h:form id="form" >
-				    <p:panel header="Realizar Novo Pedido" style="margin-bottom:10px;">
-						<h2>Novo pedido</h2>
+				    <p:panel header="Itens Selecionados para o Pedido" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT" var="itemTable" value="#{orderBBean.itemsPedido}" rowKey="#{itemTable.id}">
+					        <p:column headerText="Id" >
+					            <h:outputText value="#{itemTable.id}" />
+					        </p:column>
+					        <p:column headerText="Item" >
+					            <h:outputText value="#{itemTable.name}" />
+					        </p:column>
+					        <p:column headerText="Grupo">
+					            <h:outputText value="#{itemTable.itemGroup}" />
+					        </p:column>
+					        <p:column headerText="descrição">
+					            <h:outputText value="#{itemTable.descricao}" />
+					        </p:column>
+					        <p:column headerText="Quantidade">
+								<h:outputText value="#{itemTable.quantity}" />
+							</p:column>
+							<p:column>
+								<p:commandButton icon="ui-icon-circle-arrow-n" title="Aumenta Quantidade" action="#{orderBBean.aumenta}" update="entityDT">
+									<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
+								</p:commandButton>
+					    		<p:commandButton icon="ui-icon-circle-arrow-s" title="Diminui Quantidade" action="#{orderBBean.diminui}" update="entityDT">
+					    			<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
+								</p:commandButton>
+							</p:column>
+					    </p:dataTable>
+					    <p:commandButton value="Enviar Pedido" action="#{orderBBean.enviarPedido}"/>
+				    </p:panel>
+				    
+				    <p:panel header="Itens Disponíveis" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT1" var="itemTable" value="#{orderBBean.listItems}" rowKey="#{itemTable.id}">
+					        <p:column headerText="Id" >
+					            <h:outputText value="#{itemTable.id}" />
+					        </p:column>
+					        <p:column headerText="Item" >
+					            <h:outputText value="#{itemTable.name}" />
+					        </p:column>
+					        <p:column headerText="Grupo">
+					            <h:outputText value="#{itemTable.itemGroup}" />
+					        </p:column>
+					        <p:column headerText="descrição">
+					            <h:outputText value="#{itemTable.descricao}" />
+					        </p:column>
+							<p:column>
+								<p:commandButton icon="ui-icon-plusthick" title="Adiciona Item" action="#{orderBBean.adiciona}">
+									<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
+								</p:commandButton>
+							</p:column>
+					    </p:dataTable>
 				    </p:panel>
 			    </h:form>
 			</ui:define>

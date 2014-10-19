@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Item implements Serializable {
@@ -21,6 +22,9 @@ public class Item implements Serializable {
 	
 	@ManyToOne
 	private ItemGroup itemGroup;
+	
+	@Transient
+	private Integer quantity; 
 
 	public Long getId() {
 		return id;
@@ -52,6 +56,14 @@ public class Item implements Serializable {
 
 	public void setItemGroup(ItemGroup itemGroup) {
 		this.itemGroup = itemGroup;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }
