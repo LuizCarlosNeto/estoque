@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:body>
+		<ui:composition template="/pages/protected/templates/layout.xhtml">
+			<ui:define name="content">
+				<p:separator />
+				<h:form id="form" >
+				    <p:panel header="Lista de Pedidos" style="margin-bottom:10px;">
+						<p:dataTable id="entityDT" var="orderTable" value="#{orderBBean.allOrders}" selection="#{orderBBean.orderSelected}" rowKey="#{orderTable.id}">
+					        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+					        <p:column headerText="Id">
+					            <h:outputText value="#{orderTable.id}" />
+					        </p:column>
+					        <p:column headerText="Data">
+					            <h:outputText value="#{orderTable.date}" />
+					        </p:column>
+					        <p:column headerText="Status">
+					            <h:outputText value="#{orderTable.status}" />
+					        </p:column>
+					        <p:column headerText="Solicitante">
+					            <h:outputText value="#{orderTable.userClient.name}" />
+					        </p:column>
+					        <p:column headerText="Responsável">
+					            <h:outputText value="#{orderTable.userAdmin.name}" />
+					        </p:column>
+					    </p:dataTable>
+				    </p:panel>
+			    </h:form>
+			</ui:define>
+    	</ui:composition>
+	</h:body>
+	
+</html>

@@ -30,7 +30,7 @@ public class OrderControllerTest extends BaseTest{
 		
 		controller.includeItem(itemDB, 2);
 		controller.includeItem(itemDB2, 1);
-		controller.createOrder(userAdmin, userClient);
+		controller.requireOrder(userClient);
 		assertTrue(true);
 	}
 }

@@ -13,11 +13,11 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.ufscar.controller.OrderController;
+import br.com.ufscar.dao.OrderDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.User;
-import br.com.ufscar.exception.QuantityNotAvailableException;
 
 
 @SessionScoped
@@ -26,8 +26,11 @@ public class OrderBBean implements Serializable {
 
 	OrderController orderController;
 	UserDAO dao;
+	OrderDAO orderDAO;
 	
 	private Item item;
+	
+	private Orderr orderSelected;
 	
 	private Map<Long, Item> itemsSelected;
 
@@ -40,7 +43,9 @@ public class OrderBBean implements Serializable {
 	private void init() {
 		orderController = new OrderController();
 		dao = new UserDAO();
+		orderDAO = new OrderDAO();
 		itemsSelected = new HashMap<>();
+		orderSelected = null;
 	}
 	
 	public List<Orderr> getOrders() {
@@ -93,17 +98,29 @@ public class OrderBBean implements Serializable {
 		return itens;
 	}
 	
-	public void enviarPedido() {
+	public String enviarPedido() {
 		for (Item item : itemsSelected.values()) {
 			orderController.includeItem(item, item.getQuantity());
 		}
-		try {
-			orderController.createOrder(null, getUserLogged());
-		} catch (QuantityNotAvailableException e) {
-			//TODO: Messagem de aviso
-			e.printStackTrace();
-		}
+		orderController.requireOrder(getUserLogged());
+		return "/pages/protected/defaultUser/lista-pedidos.xhtml";
 	}
+	
+	public String verificar() {
+		orderController.verifyOrder(orderSelected, getUserLogged());
+		return "";
+	}
+	
+	
+	
+	public List<Orderr> getOrdersToVerify() {
+		return orderDAO.listOrdersToVerify();
+	}
+	
+	public List<Orderr> getAllOrders() {
+		return dao.findAll(Orderr.class);
+	}
+	
 	//getters and setters 
 
 	public Item getItem() {
@@ -121,5 +138,15 @@ public class OrderBBean implements Serializable {
 	public void setItemsSelected(Map<Long, Item> itemsSelected) {
 		this.itemsSelected = itemsSelected;
 	}
+
+	public Orderr getOrderSelected() {
+		return orderSelected;
+	}
+
+	public void setOrderSelected(Orderr orderSelected) {
+		this.orderSelected = orderSelected;
+	}
+	
+	
 
 }

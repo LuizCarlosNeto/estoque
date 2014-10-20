@@ -31,7 +31,29 @@ public class OrderController {
 		userDAO = new UserDAO();
 	}
 	
-	public void createOrder(User userAdmin, User userClient) throws QuantityNotAvailableException {
+	public void verifyOrder(Orderr order, User userAdmin) {
+		if (order != null && order.getItems() != null) {
+			for (ItemOrder itemOrder : order.getItems()) {
+				Item item = dao.find(Item.class, itemOrder.getId());
+				try {
+					itemController.saida(userAdmin, item, itemOrder.getQuantity());
+				} catch (QuantityNotAvailableException e) {
+					e.printStackTrace();
+					order.setUserAdmin(userAdmin);
+					order.setAsRejected();
+					dao.update(order);
+					return;
+				}
+			}
+			
+			order.setUserAdmin(userAdmin);
+			order.setAsPacking();
+			dao.update(order);
+		}
+		
+	}
+	
+	public void requireOrder(User userClient) {
 		if (!preOrdem.isEmpty()) {
 			List<ItemOrder> itemOrders = new ArrayList<>();
 			for (Long id : preOrdem.keySet()) {
@@ -41,16 +63,14 @@ public class OrderController {
 				itemOrder.setItem(item);
 				itemOrder.setQuantity(quantity);
 				itemOrders.add(itemOrder);
-				itemController.saida(userAdmin, item, quantity);
 			}
 			
 			Orderr order = new Orderr();
 			order.setDate(new Date());
 			order.setItems(new ArrayList<ItemOrder>());
 			order.setItems(itemOrders);
-			order.setUserAdmin(userAdmin);
 			order.setUserClient(userClient);
-			order.setAsPacking();
+			order.setAsSent();
 			dao.save(order);
 		}
 		

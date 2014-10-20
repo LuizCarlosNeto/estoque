@@ -89,5 +89,13 @@ public class Orderr implements Serializable{
 		status = OrderStatus.PACKING;
 	}
 	
+	public void setAsSent() {
+		status = OrderStatus.SENT;
+	}
+
+	public void setAsRejected() {
+		status = OrderStatus.REJECTED;
+	}
+	
 	
 }
