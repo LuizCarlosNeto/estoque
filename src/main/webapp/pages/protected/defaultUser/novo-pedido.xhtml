@@ -30,10 +30,10 @@
 								<h:outputText value="#{itemTable.quantity}" />
 							</p:column>
 							<p:column>
-								<p:commandButton icon="ui-icon-circle-arrow-n" title="Aumenta Quantidade" action="#{orderBBean.aumenta}" update="entityDT">
+								<p:commandButton icon="ui-icon-circle-arrow-n" title="Aumenta Quantidade" action="#{orderBBean.aumenta}" update="@form">
 									<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
 								</p:commandButton>
-					    		<p:commandButton icon="ui-icon-circle-arrow-s" title="Diminui Quantidade" action="#{orderBBean.diminui}" update="entityDT">
+					    		<p:commandButton icon="ui-icon-circle-arrow-s" title="Diminui Quantidade" action="#{orderBBean.diminui}" update="@form">
 					    			<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
 								</p:commandButton>
 							</p:column>
@@ -56,7 +56,7 @@
 					            <h:outputText value="#{itemTable.descricao}" />
 					        </p:column>
 							<p:column>
-								<p:commandButton icon="ui-icon-plusthick" title="Adiciona Item" action="#{orderBBean.adiciona}">
+								<p:commandButton icon="ui-icon-plusthick" title="Adiciona Item" action="#{orderBBean.adiciona}" update="@form">
 									<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
 								</p:commandButton>
 							</p:column>
