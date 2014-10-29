@@ -11,10 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.ufscar.enums.OrderStatus;
+import br.com.ufscar.enums.OrderType;
 
 @Entity
 public class Orderr implements Serializable{
@@ -25,7 +27,8 @@ public class Orderr implements Serializable{
 	
 	private Date date;
 	
-	@OneToMany(mappedBy="orderr",cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="orderr_id")
 	private List<ItemOrder> Items;
 
 	@ManyToOne
@@ -36,6 +39,9 @@ public class Orderr implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
+	
+	@Enumerated(EnumType.STRING)
+	private OrderType type;
 	
 	public Long getId() {
 		return id;
@@ -80,6 +86,14 @@ public class Orderr implements Serializable{
 	public OrderStatus getStatus() {
 		return status;
 	}
+	
+	public OrderType getType() {
+		return type;
+	}
+	
+	public void setType(OrderType type) {
+		this.type = type;
+	}
 
 	public void setAsDelivered() {
 		status = OrderStatus.DELIVERED;
@@ -96,6 +110,5 @@ public class Orderr implements Serializable{
 	public void setAsRejected() {
 		status = OrderStatus.REJECTED;
 	}
-	
 	
 }

@@ -18,9 +18,6 @@ public class ItemOrder implements Serializable{
 	@ManyToOne
 	private Item item;
 	
-	@ManyToOne
-	private Orderr orderr;
-	
 	private Integer quantity;
 
 	public Long getId() {
@@ -46,14 +43,5 @@ public class ItemOrder implements Serializable{
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
-	public Orderr getOrder() {
-		return orderr;
-	}
-
-	public void setOrder(Orderr order) {
-		this.orderr = order;
-	}
-	
 
 }

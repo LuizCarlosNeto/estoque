@@ -25,6 +25,7 @@ import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.Role;
 import br.com.ufscar.entity.User;
 import br.com.ufscar.enums.ItemMovimentationType;
+import br.com.ufscar.enums.OrderType;
 
 public class DataBaseInitTest extends BaseTest{
 
@@ -276,6 +277,7 @@ public class DataBaseInitTest extends BaseTest{
 			order.getItems().add(itemOrder2);
 			order.setUserAdmin(userAdmin);
 			order.setUserClient(userClient);
+			order.setType(OrderType.CLIENT);
 			dao.save(order);
 		}
 	}

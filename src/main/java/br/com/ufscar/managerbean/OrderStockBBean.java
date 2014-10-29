@@ -12,7 +12,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import br.com.ufscar.controller.OrderController;
+import br.com.ufscar.controller.OrderStockController;
 import br.com.ufscar.dao.OrderDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
@@ -22,9 +22,9 @@ import br.com.ufscar.entity.User;
 
 @SessionScoped
 @ManagedBean
-public class OrderBBean implements Serializable {
+public class OrderStockBBean implements Serializable {
 
-	OrderController orderController;
+	OrderStockController orderStockController;
 	UserDAO dao;
 	OrderDAO orderDAO;
 	
@@ -34,22 +34,23 @@ public class OrderBBean implements Serializable {
 	
 	private Map<Long, Item> itemsSelected;
 
-	public OrderBBean() {
+	public OrderStockBBean() {
 		super();
 		this.init();
 	}
 	
 	@PostConstruct
 	private void init() {
-		orderController = new OrderController();
+		orderStockController = new OrderStockController();
 		dao = new UserDAO();
 		orderDAO = new OrderDAO();
 		itemsSelected = new HashMap<>();
 		orderSelected = null;
+		item = new Item();
 	}
 	
 	public List<Orderr> getOrders() {
-		return orderController.ordersByClient(getUserLogged());
+		return orderStockController.ordersByAdmin(getUserLogged());
 	}
 
 	public List<Item> getListItems() {
@@ -100,26 +101,26 @@ public class OrderBBean implements Serializable {
 	
 	public String enviarPedido() {
 		for (Item item : itemsSelected.values()) {
-			orderController.includeItem(item, item.getQuantity());
+			orderStockController.includeItemStock(item, item.getQuantity());
 		}
-		orderController.requireOrder(getUserLogged());
+		orderStockController.requireOrderStock(getUserLogged());
 		this.init();
-		return "/pages/protected/defaultUser/lista-pedidos.xhtml";
+		return "/pages/protected/admin/pedido/lista-pedidos-estoque-verificar.xhtml";
 	}
 	
 	public String verificar() {
-		orderController.verifyOrder(orderSelected, getUserLogged());
+		orderStockController.verifyOrder(orderSelected, getUserLogged());
 		return "";
 	}
 	
 	
 	
 	public List<Orderr> getOrdersToVerify() {
-		return orderDAO.listOrdersToVerify();
+		return orderDAO.listOrdersToVerifyStock();
 	}
 	
 	public List<Orderr> getAllOrders() {
-		return dao.findAll(Orderr.class);
+		return orderDAO.listAllOrdersStock();
 	}
 	
 	//getters and setters 

@@ -16,7 +16,7 @@ import br.com.ufscar.entity.User;
 import br.com.ufscar.enums.OrderType;
 import br.com.ufscar.exception.QuantityNotAvailableException;
 
-public class OrderController {
+public class OrderStockController {
 	
 	private GenericDAO dao;
 	private OrderDAO orderDAO;
@@ -24,7 +24,7 @@ public class OrderController {
 	private Map<Long, Integer> preOrdem;
 	private ItemMovimentationController itemController;
 
-	public OrderController() {
+	public OrderStockController() {
 		dao = new GenericDAO();
 		orderDAO = new OrderDAO();
 		preOrdem = new HashMap<>();
@@ -40,7 +40,7 @@ public class OrderController {
 					item = dao.find(Item.class, itemOrder.getItem().getId());
 				}
 				try {
-					itemController.saida(userAdmin, item, itemOrder.getQuantity());
+					itemController.entrada(userAdmin, item, itemOrder.getQuantity());
 				} catch (QuantityNotAvailableException e) {
 					e.printStackTrace();
 					order.setUserAdmin(userAdmin);
@@ -57,7 +57,7 @@ public class OrderController {
 		
 	}
 	
-	public void requireOrder(User userClient) {
+	public void requireOrderStock(User userAdmin) {
 		if (!preOrdem.isEmpty()) {
 			List<ItemOrder> itemOrders = new ArrayList<>();
 			for (Long id : preOrdem.keySet()) {
@@ -73,8 +73,8 @@ public class OrderController {
 			order.setDate(new Date());
 			order.setItems(new ArrayList<ItemOrder>());
 			order.setItems(itemOrders);
-			order.setUserClient(userClient);
-			order.setType(OrderType.CLIENT);
+			order.setUserAdmin(userAdmin);
+			order.setType(OrderType.STOCK);
 			order.setAsSent();
 			dao.save(order);
 		}
@@ -85,12 +85,12 @@ public class OrderController {
 		order.setAsDelivered();
 	}
 
-	public void includeItem(Item item, Integer quantity) {
+	public void includeItemStock(Item item, Integer quantity) {
 		preOrdem.put(item.getId(), quantity);
 	}
 	
-	public List<Orderr> ordersByClient(User userClient) {
-		return orderDAO.listOrderByClient(userDAO.findUserByEmail(userClient.getEmail()));
+	public List<Orderr> ordersByAdmin(User userAdmin) {
+		return orderDAO.listOrderByAdmin(userDAO.findUserByEmail(userAdmin.getEmail()));
 	}
 	
 }
