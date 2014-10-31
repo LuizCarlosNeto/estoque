@@ -13,8 +13,9 @@
 				<p:separator />
 				<h:form id="form" >
 				    <p:panel header="Movimentação do Item" style="margin-bottom:10px;">
-				    	<p:panelGrid columns="3">
+				    	<p:panelGrid columns="4">
 					    	<p:inputText placeholder="Quantidade:" value="#{itemBBean.quantity}" rendered="true"/>
+					    	<p:inputText placeholder="Valor Unitário (Ex: 1.99):"  value="#{itemBBean.valorUnitario}" rendered="true"></p:inputText>
 					    	<p:commandButton icon="ui-icon-circle-arrow-n" value="Entrada" action="#{itemBBean.registrarEntrada}" update="entityDT"/>
 					    	<p:commandButton icon="ui-icon-circle-arrow-s" value="Saída" action="#{itemBBean.registrarSaida}" update="entityDT"/>
 				    	</p:panelGrid>
@@ -34,20 +35,20 @@
 					            <h:outputText value="#{ItemMovimentationTable.date}" />
 					        </p:column>
 					        
-					        <p:column headerText="Quantidade">
-					            <h:outputText value="#{ItemMovimentationTable.quantity}" />
-					        </p:column>
-					        
 					        <p:column headerText="Tipo">
 					            <h:outputText value="#{ItemMovimentationTable.type}" />
 					        </p:column>
 					        
-					        <p:column headerText="item id">
-					            <h:outputText value="#{ItemMovimentationTable.item.id}" />
+					        <p:column headerText="Quantidade">
+					            <h:outputText value="#{ItemMovimentationTable.quantity}" />
 					        </p:column>
 					        
-					        <p:column headerText="nome item">
-					            <h:outputText value="#{ItemMovimentationTable.item.name}" />
+					        <p:column headerText="Valor Unitário">
+					            <h:outputText value="#{ItemMovimentationTable.valorUnitario}" />
+					        </p:column>
+					        
+					        <p:column headerText="Valor Total">
+					            <h:outputText value="#{ItemMovimentationTable.valorTotal}" />
 					        </p:column>
 					        
 					        <p:column headerText="Responsável">

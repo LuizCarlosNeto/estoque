@@ -13,7 +13,7 @@
 				<p:separator />
 				<h:form id="form" >
 				    <p:panel header="Lista de Pedidos" style="margin-bottom:10px;">
-						<p:dataTable id="entityDT" var="orderTable" value="#{orderBBean.ordersToVerify}" rowKey="#{orderTable.id}">
+						<p:dataTable id="entityDT" var="orderTable" value="#{orderBBean.allOrders}" rowKey="#{orderTable.id}">
 					        <p:column headerText="Id">
 					            <h:outputText value="#{orderTable.id}" />
 					        </p:column>
@@ -30,9 +30,7 @@
 					            <h:outputText value="#{orderTable.userAdmin.name}" />
 					        </p:column>
 					        <p:column>
-								<p:commandButton icon="ui-icon-check" title="Verificar" action="#{orderBBean.verificar}" update="entityDT">
-									<f:setPropertyActionListener value="#{orderTable}" target="#{orderBBean.orderSelected}" />
-								</p:commandButton>
+								visualizar
 							</p:column>
 					    </p:dataTable>
 					    

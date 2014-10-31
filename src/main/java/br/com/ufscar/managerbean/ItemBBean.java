@@ -1,6 +1,7 @@
 package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,8 @@ public class ItemBBean implements Serializable {
 	List<String> itemGroups; 
 	private ItemMovimentation itemMovimentation;
 	private Integer quantity;
-
+	private BigDecimal valorUnitario;
+	
 	public ItemBBean() {
 		super();
 		this.init();
@@ -101,9 +103,9 @@ public class ItemBBean implements Serializable {
 	public String registrarEntrada() {
 		ItemMovimentationController controller = new ItemMovimentationController();
 		try {
-			controller.entrada(UserSessionUtil.getUserFromSession(), item, quantity);
+			controller.entrada(UserSessionUtil.getUserFromSession(), item, quantity, valorUnitario);
 			return "";
-		} catch (QuantityNotAvailableException e) {
+		} catch (Exception e) {
 			// TODO mensagem de alerta
 			e.printStackTrace();
 			return "";
@@ -172,6 +174,14 @@ public class ItemBBean implements Serializable {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
 	}
 	
 }

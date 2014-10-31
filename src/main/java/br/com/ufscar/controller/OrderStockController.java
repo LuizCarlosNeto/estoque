@@ -1,5 +1,6 @@
 package br.com.ufscar.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class OrderStockController {
 	private UserDAO userDAO;
 	private Map<Long, Integer> preOrdem;
 	private ItemMovimentationController itemController;
+	//TODO: Solicitar valor do pruduto na tela e processar entrada de valor. 
+	//Analogia a entrada informando o valor da nota fiscal de compra.
+	private BigDecimal valorUnitario = new BigDecimal("1.99");
 
 	public OrderStockController() {
 		dao = new GenericDAO();
@@ -40,8 +44,8 @@ public class OrderStockController {
 					item = dao.find(Item.class, itemOrder.getItem().getId());
 				}
 				try {
-					itemController.entrada(userAdmin, item, itemOrder.getQuantity());
-				} catch (QuantityNotAvailableException e) {
+					itemController.entrada(userAdmin, item, itemOrder.getQuantity(), valorUnitario);
+				} catch (Exception e) {
 					e.printStackTrace();
 					order.setUserAdmin(userAdmin);
 					order.setAsRejected();

@@ -16,6 +16,7 @@ import br.com.ufscar.controller.OrderController;
 import br.com.ufscar.dao.OrderDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
+import br.com.ufscar.entity.ItemOrder;
 import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.User;
 
@@ -28,11 +29,13 @@ public class OrderBBean implements Serializable {
 	UserDAO dao;
 	OrderDAO orderDAO;
 	
+	private ItemOrder itemOrder;
+	
 	private Item item;
 	
 	private Orderr orderSelected;
 	
-	private Map<Long, Item> itemsSelected;
+	private Map<Long, ItemOrder> itemsSelected;
 
 	public OrderBBean() {
 		super();
@@ -70,37 +73,42 @@ public class OrderBBean implements Serializable {
 	}
 	
 	public void aumenta() {
-		if (item.getQuantity() == null) {
-			item.setQuantity(1);
+		itemOrder = itemsSelected.get(item.getId());
+		if (itemOrder.getQuantity() == null) {
+			itemOrder.setQuantity(1);
 		} else {
-			Integer qtd = item.getQuantity();
-			item.setQuantity(++qtd);
+			Integer qtd = itemOrder.getQuantity();
+			itemOrder.setQuantity(++qtd);
 		}
 	}
 	
 	public void diminui() {
-		if (item.getQuantity() != null && item.getQuantity() > 0 ) {
-			Integer qtd = item.getQuantity();
-			item.setQuantity(--qtd);
+		itemOrder = itemsSelected.get(item.getId());
+		if (itemOrder.getQuantity() != null && itemOrder.getQuantity() > 0 ) {
+			Integer qtd = itemOrder.getQuantity();
+			itemOrder.setQuantity(--qtd);
 		}
 	}
 	
 	public String adiciona() {
-		itemsSelected.put(item.getId(), item);
+		if (itemsSelected.get(item.getId())==null){
+			itemOrder = new ItemOrder();
+			itemOrder.setItem(item);
+			itemsSelected.put(item.getId(), itemOrder);
+			
+		}
+		aumenta();
 		return "";
 	}
 	
-	public List<Item> getItemsPedido() {
-		List<Item> itens = new ArrayList<>();
-		for (Item item : itemsSelected.values()) {
-			itens.add(item);
-		}
+	public List<ItemOrder> getItemsPedido() {
+		List<ItemOrder> itens = new ArrayList<ItemOrder>(itemsSelected.values());
 		return itens;
 	}
 	
 	public String enviarPedido() {
-		for (Item item : itemsSelected.values()) {
-			orderController.includeItem(item, item.getQuantity());
+		for (ItemOrder item : itemsSelected.values()) {
+			orderController.includeItem(itemOrder.getItem(), itemOrder.getQuantity());
 		}
 		orderController.requireOrder(getUserLogged());
 		this.init();
@@ -132,11 +140,11 @@ public class OrderBBean implements Serializable {
 		this.item = item;
 	}
 
-	public Map<Long, Item> getItemsSelected() {
+	public Map<Long, ItemOrder> getItemsSelected() {
 		return itemsSelected;
 	}
 
-	public void setItemsSelected(Map<Long, Item> itemsSelected) {
+	public void setItemsSelected(Map<Long, ItemOrder> itemsSelected) {
 		this.itemsSelected = itemsSelected;
 	}
 

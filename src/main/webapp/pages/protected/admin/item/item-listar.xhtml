@@ -21,11 +21,20 @@
 					        <p:column headerText="Nome">
 					            <h:outputText value="#{itemTable.name}" />
 					        </p:column>
-					        <p:column headerText="Descrição">
-					            <h:outputText value="#{itemTable.descricao}" />
-					        </p:column>
 					        <p:column headerText="Grupo">
 					            <h:outputText value="#{itemTable.itemGroup.name}" />
+					        </p:column>
+					        <p:column headerText="Saldo">
+					            <h:outputText value="#{itemTable.quantity}" />
+					        </p:column>
+					        <p:column headerText="Preço Unitário">
+					            <h:outputText value="#{itemTable.precoUnitario}" />
+					        </p:column>
+					        <p:column headerText="Valor Ajuste">
+					            <h:outputText value="#{itemTable.valorAjuste}" />
+					        </p:column>
+					        <p:column headerText="Valor Total Estoque">
+					            <h:outputText value="#{itemTable.valorTotal}" />
 					        </p:column>
 					        <f:facet name="footer">
 									<p:commandButton icon="ui-icon-circle-plus" value="Novo" action="#{itemBBean.newItem}"/>

@@ -1,6 +1,7 @@
 package br.com.ufscar.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import br.com.ufscar.enums.ItemMovimentationType;
 
@@ -23,6 +25,8 @@ public class ItemMovimentation implements Serializable {
 	private Date date;
 
 	private Integer quantity;
+	
+	private BigDecimal valorUnitario;
 	
 	@Enumerated(EnumType.STRING)
 	private ItemMovimentationType type;
@@ -42,6 +46,8 @@ public class ItemMovimentation implements Serializable {
 	}
 
 	public Integer getQuantity() {
+		if (this.quantity <= 0)
+			setQuantity(0);
 		return quantity;
 	}
 
@@ -80,5 +86,20 @@ public class ItemMovimentation implements Serializable {
 	public void setUserAdmin(User userAdmin) {
 		this.userAdmin = userAdmin;
 	}
+
+	public BigDecimal getValorUnitario() {
+		if (this.valorUnitario == null)
+			setValorUnitario(BigDecimal.ZERO);
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
 	
+	@Transient
+	public BigDecimal getValorTotal() {
+		return getValorUnitario().multiply(new BigDecimal(getQuantity()));
+	}
+
 }

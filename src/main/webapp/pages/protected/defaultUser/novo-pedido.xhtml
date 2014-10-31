@@ -15,26 +15,23 @@
 				    <p:panel header="Itens Selecionados para o Pedido" style="margin-bottom:10px;">
 						<p:dataTable id="entityDT" var="itemTable" value="#{orderBBean.itemsPedido}" rowKey="#{itemTable.id}">
 					        <p:column headerText="Id" >
-					            <h:outputText value="#{itemTable.id}" />
+					            <h:outputText value="#{itemTable.item.id}" />
 					        </p:column>
 					        <p:column headerText="Item" >
-					            <h:outputText value="#{itemTable.name}" />
+					            <h:outputText value="#{itemTable.item.name}" />
 					        </p:column>
 					        <p:column headerText="Grupo">
-					            <h:outputText value="#{itemTable.itemGroup.name}" />
-					        </p:column>
-					        <p:column headerText="descrição">
-					            <h:outputText value="#{itemTable.descricao}" />
+					            <h:outputText value="#{itemTable.item.itemGroup.name}" />
 					        </p:column>
 					        <p:column headerText="Quantidade">
 								<h:outputText value="#{itemTable.quantity}" />
 							</p:column>
 							<p:column>
 								<p:commandButton icon="ui-icon-circle-arrow-n" title="Aumenta Quantidade" action="#{orderBBean.aumenta}" update="@form">
-									<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
+									<f:setPropertyActionListener value="#{itemTable.item}" target="#{orderBBean.item}" />
 								</p:commandButton>
 					    		<p:commandButton icon="ui-icon-circle-arrow-s" title="Diminui Quantidade" action="#{orderBBean.diminui}" update="@form">
-					    			<f:setPropertyActionListener value="#{itemTable}" target="#{orderBBean.item}" />
+					    			<f:setPropertyActionListener value="#{itemTable.item}" target="#{orderBBean.item}" />
 								</p:commandButton>
 							</p:column>
 					    </p:dataTable>
@@ -52,8 +49,8 @@
 					        <p:column headerText="Grupo">
 					            <h:outputText value="#{itemTable.itemGroup.name}" />
 					        </p:column>
-					        <p:column headerText="descrição">
-					            <h:outputText value="#{itemTable.descricao}" />
+					        <p:column headerText="Preço Unitário" >
+					            <h:outputText value="#{itemTable.precoUnitario}" />
 					        </p:column>
 							<p:column>
 								<p:commandButton icon="ui-icon-plusthick" title="Adiciona Item" action="#{orderBBean.adiciona}" update="@form">

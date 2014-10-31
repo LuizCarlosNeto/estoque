@@ -1,6 +1,8 @@
 package br.com.ufscar.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,16 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import br.com.ufscar.dao.ItemMovimentationDAO;
+
 @Entity
 public class Item implements Serializable {
 
+	@Transient
+	private ItemMovimentationDAO dao = new ItemMovimentationDAO();
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String name;
-	
-	private String descricao;
 	
 	@ManyToOne
 	private ItemGroup itemGroup;
@@ -26,6 +31,10 @@ public class Item implements Serializable {
 	@Transient
 	private Integer quantity; 
 
+	private BigDecimal precoUnitario;
+	
+	private BigDecimal valorAjuste;
+	
 	public Long getId() {
 		return id;
 	}
@@ -42,14 +51,6 @@ public class Item implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 	public ItemGroup getItemGroup() {
 		return itemGroup;
 	}
@@ -59,11 +60,34 @@ public class Item implements Serializable {
 	}
 
 	public Integer getQuantity() {
-		return quantity;
+		return dao.saldoItem(this);
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public BigDecimal getPrecoUnitario() {
+		if (this.precoUnitario==null)
+			setPrecoUnitario(BigDecimal.ZERO);
+		return precoUnitario;
+	}
+
+	public void setPrecoUnitario(BigDecimal precoUnitario) {
+		this.precoUnitario = precoUnitario;
+	}
+
+	public BigDecimal getValorAjuste() {
+		if (this.valorAjuste==null)
+			setValorAjuste(BigDecimal.ZERO);
+		return valorAjuste;
+	}
+
+	public void setValorAjuste(BigDecimal valorAjuste) {
+		this.valorAjuste = valorAjuste;
+	}
+
+	public BigDecimal getValorTotal() {
+		BigDecimal valorTotal = BigDecimal.ZERO;
+		valorTotal = valorTotal.add(getPrecoUnitario().multiply(new BigDecimal(getQuantity())));
+		valorTotal = valorTotal.add(getValorAjuste());
+		return valorTotal;
 	}
 
 }
