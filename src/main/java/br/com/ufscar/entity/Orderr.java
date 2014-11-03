@@ -27,7 +27,7 @@ public class Orderr implements Serializable{
 	
 	private Date date;
 	
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="orderr_id")
 	private List<ItemOrder> Items;
 

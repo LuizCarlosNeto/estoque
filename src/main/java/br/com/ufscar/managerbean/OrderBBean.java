@@ -108,7 +108,7 @@ public class OrderBBean implements Serializable {
 	
 	public String enviarPedido() {
 		for (ItemOrder item : itemsSelected.values()) {
-			orderController.includeItem(itemOrder.getItem(), itemOrder.getQuantity());
+			orderController.includeItem(item.getItem(), item.getQuantity());
 		}
 		orderController.requireOrder(getUserLogged());
 		this.init();

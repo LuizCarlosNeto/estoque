@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.ufscar.controller.OrderStockController;
+import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.dao.OrderDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
@@ -28,7 +29,7 @@ public class OrderStockBBean implements Serializable {
 	OrderStockController orderStockController;
 	UserDAO dao;
 	OrderDAO orderDAO;
-	
+	ItemMovimentationDAO itemMovimentationDAO;
 	private ItemOrder itemOrder;
 	
 	private Item item;
@@ -47,6 +48,7 @@ public class OrderStockBBean implements Serializable {
 		orderStockController = new OrderStockController();
 		dao = new UserDAO();
 		orderDAO = new OrderDAO();
+		itemMovimentationDAO = new ItemMovimentationDAO();
 		itemsSelected = new HashMap<>();
 		orderSelected = null;
 	}
@@ -75,7 +77,7 @@ public class OrderStockBBean implements Serializable {
 	public void aumenta() {
 		itemOrder = itemsSelected.get(item.getId());
 		if (itemOrder.getQuantity() == null) {
-			itemOrder.setQuantity(1);
+			itemOrder.setQuantity(itemMovimentationDAO.calcularQuantidadeReposicao(item));
 		} else {
 			Integer qtd = itemOrder.getQuantity();
 			itemOrder.setQuantity(++qtd);
@@ -108,7 +110,7 @@ public class OrderStockBBean implements Serializable {
 	
 	public String enviarPedido() {
 		for (ItemOrder item : itemsSelected.values()) {
-			orderStockController.includeItemStock(itemOrder.getItem(), item.getQuantity());
+			orderStockController.includeItemStock(item.getItem(), item.getQuantity());
 		}
 		orderStockController.requireOrderStock(getUserLogged());
 		this.init();
