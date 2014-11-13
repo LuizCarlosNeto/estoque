@@ -48,6 +48,10 @@
 				        	<p:menuitem value="Novo Pedido" url="/pages/protected/admin/pedido/novo-pedido-estoque.xhtml" />
 				            <p:menuitem value="Verificar Pedidos" url="/pages/protected/admin/pedido/lista-pedidos-estoque-verificar.xhtml" />
 				        </p:submenu>
+				        
+				        <p:submenu label="Relatório">
+				        	<p:menuitem value="Movimentação" url="/pages/protected/admin/relatorio/relatorio-item-movimentacao.xhtml" />
+				        </p:submenu>
 				    
 				        <f:facet name="options">
 				            <p:commandButton value="Logout" icon="ui-icon-extlink" action="#{userBBean.logOut}"/>

@@ -14,6 +14,12 @@ import br.com.ufscar.exception.InvalidQuantityException;
 import br.com.ufscar.exception.QuantityNotAvailableException;
 
 public class ItemMovimentationController {
+	
+	ItemMovimentationDAO itemMovimentationDAO;
+	
+	public ItemMovimentationController() {
+		itemMovimentationDAO = new ItemMovimentationDAO();
+	}
 
 	public void entrada(User user, Item item, Integer quantity, BigDecimal valorUnitario) throws InvalidQuantityException, InvalidPriceException {
 		GenericDAO dao = new GenericDAO();
@@ -86,7 +92,5 @@ public class ItemMovimentationController {
 				dao.save(itemMovimentation);
 			}
 		}
-		
 	}
-	
 }

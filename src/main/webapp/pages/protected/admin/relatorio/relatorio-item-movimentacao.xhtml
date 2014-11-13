@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:body>
+		<ui:composition template="/pages/protected/templates/layout.xhtml">
+			<ui:define name="content">
+				<p:separator />
+				<h:form id="form" >
+				    <p:panel header="Relatório de Movimentação" style="margin-bottom:10px;">
+						<p:panelGrid columns="5">
+							<h:outputLabel value="Inicio"/>
+							<p:calendar value="#{itemBBean.startPeriod}"/>
+							<h:outputLabel value="Fim"/>
+							<p:calendar value="#{itemBBean.endPeriod}"/>
+							<p:commandButton value="buscar" update="@form"/>
+						</p:panelGrid>
+						<p:dataTable id="entityDT" var="itemTable" value="#{itemBBean.listItensByPeriod}">
+					        <p:column headerText="Id">
+					            <h:outputText value="#{itemTable.id}" />
+					        </p:column>
+					        <p:column headerText="Data">
+					            <h:outputText value="#{itemTable.date}" />
+					        </p:column>
+					        <p:column headerText="Quantidade">
+					            <h:outputText value="#{itemTable.quantity}" />
+					        </p:column>
+					        <p:column headerText="Tipo">
+					            <h:outputText value="#{itemTable.type}" />
+					        </p:column>
+					        <p:column headerText="Item">
+					            <h:outputText value="#{itemTable.item.name}" />
+					        </p:column>
+					    </p:dataTable>
+				    </p:panel>
+			    </h:form>
+			</ui:define>
+    	</ui:composition>
+	</h:body>
+</html>

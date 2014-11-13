@@ -2,6 +2,7 @@ package br.com.ufscar.managerbean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class ItemBBean implements Serializable {
 	private ItemMovimentation itemMovimentation;
 	private Integer quantity;
 	private BigDecimal valorUnitario;
+	private Date startPeriod;
+	private Date endPeriod;
 	
 	public ItemBBean() {
 		super();
@@ -125,6 +128,10 @@ public class ItemBBean implements Serializable {
 		} 
 	}
 	
+	public List<ItemMovimentation> getListItensByPeriod() {
+		return dao.listItemMovimentationByPeriod(startPeriod, endPeriod);
+	}
+	
 	
 	//getters and setters 
 
@@ -182,6 +189,22 @@ public class ItemBBean implements Serializable {
 
 	public void setValorUnitario(BigDecimal valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public Date getStartPeriod() {
+		return startPeriod;
+	}
+
+	public void setStartPeriod(Date startPeriod) {
+		this.startPeriod = startPeriod;
+	}
+
+	public Date getEndPeriod() {
+		return endPeriod;
+	}
+
+	public void setEndPeriod(Date endPeriod) {
+		this.endPeriod = endPeriod;
 	}
 	
 }

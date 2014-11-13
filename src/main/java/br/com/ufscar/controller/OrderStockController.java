@@ -15,7 +15,6 @@ import br.com.ufscar.entity.ItemOrder;
 import br.com.ufscar.entity.Orderr;
 import br.com.ufscar.entity.User;
 import br.com.ufscar.enums.OrderType;
-import br.com.ufscar.exception.QuantityNotAvailableException;
 
 public class OrderStockController {
 	

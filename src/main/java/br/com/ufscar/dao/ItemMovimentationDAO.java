@@ -3,7 +3,6 @@ package br.com.ufscar.dao;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,6 +145,17 @@ public class ItemMovimentationDAO extends GenericDAO{
         }
 		
 		return result.intValue();
+	}
+
+	public List<ItemMovimentation> listItemMovimentationByPeriod(Date start, Date end) {
+		StringBuilder query = new StringBuilder("FROM " + ItemMovimentation.class.getSimpleName());
+		query.append(" WHERE date BETWEEN :start AND :end ORDER BY date");
+		
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("start", start);
+		parameters.put("end", end);
+		
+		return findResults(query.toString(), parameters);
 	}
 
 }

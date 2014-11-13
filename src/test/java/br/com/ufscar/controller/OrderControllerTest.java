@@ -13,7 +13,6 @@ import br.com.ufscar.entity.Item;
 import br.com.ufscar.entity.User;
 import br.com.ufscar.exception.InvalidPriceException;
 import br.com.ufscar.exception.InvalidQuantityException;
-import br.com.ufscar.exception.QuantityNotAvailableException;
 
 public class OrderControllerTest extends BaseTest{
 
