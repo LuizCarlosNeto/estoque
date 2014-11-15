@@ -1,15 +1,21 @@
 package br.com.ufscar.controller;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
 import br.com.ufscar.BaseTest;
+import br.com.ufscar.dao.ItemGroupDAO;
 import br.com.ufscar.dao.ItemMovimentationDAO;
 import br.com.ufscar.dao.UserDAO;
 import br.com.ufscar.entity.Item;
+import br.com.ufscar.entity.ItemGroup;
+import br.com.ufscar.entity.ItemMovimentation;
 import br.com.ufscar.entity.User;
 import br.com.ufscar.exception.InvalidPriceException;
 import br.com.ufscar.exception.InvalidQuantityException;
@@ -74,6 +80,25 @@ public class ItemMovimentationControllerTest extends BaseTest{
 		
 		Integer saldoAntes = dao.saldoItem(itemDB);
 		controller.saida(userAdmin, itemDB, saldoAntes + 1);
+		
+	}
+	
+	@Test
+	public void testeRelatorioPorPeriodoEGrupo(){
+		UserDAO userDAO = new UserDAO();
+		User user1 = userDAO.find(User.class, 1l);
+		User user2 = userDAO.find(User.class, 2l);
+		ItemGroupDAO itemGroupDAO = new ItemGroupDAO();
+		ItemGroup group1 = itemGroupDAO.find(ItemGroup.class, 1l);
+		ItemGroup group2 = itemGroupDAO.find(ItemGroup.class, 2l);
+		
+		ItemMovimentationDAO itemMovimentationDAO = new ItemMovimentationDAO();
+		
+		List<ItemMovimentation> listGroup = itemMovimentationDAO.listItemMovimentationByPeriodGroupByItemGroup(new Date(1388552400000l), new Date(), Arrays.asList(group1, group2));
+		assertFalse(listGroup.isEmpty());
+		
+		List<ItemMovimentation> listUser = itemMovimentationDAO.listItemMovimentationByPeriodGroupByUser(new Date(1388552400000l), new Date(), Arrays.asList(user1, user2));
+		assertFalse(listUser.isEmpty());
 		
 	}
 }

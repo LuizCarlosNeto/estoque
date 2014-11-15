@@ -22,9 +22,6 @@ public class ItemGroup implements Serializable {
 	@Column(unique = true)
 	private String name;
 	
-//	@OneToMany(mappedBy="item",cascade=CascadeType.PERSIST)
-//	private List<Item> itens = new ArrayList<Item>();
-	
 	public Long getId() {
 		return id;
 	}

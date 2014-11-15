@@ -11,8 +11,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.ufscar.entity.Item;
+import br.com.ufscar.entity.ItemGroup;
 import br.com.ufscar.entity.ItemMovimentation;
 import br.com.ufscar.entity.ItemOrder;
+import br.com.ufscar.entity.User;
 import br.com.ufscar.enums.ItemMovimentationType;
 import br.com.ufscar.enums.OrderStatus;
 import br.com.ufscar.enums.OrderType;
@@ -148,12 +150,31 @@ public class ItemMovimentationDAO extends GenericDAO{
 	}
 
 	public List<ItemMovimentation> listItemMovimentationByPeriod(Date start, Date end) {
-		StringBuilder query = new StringBuilder("FROM " + ItemMovimentation.class.getSimpleName());
-		query.append(" WHERE date BETWEEN :start AND :end ORDER BY date");
+		return listMovimentationByPeriod(start, end, null, null);
+	}
+	
+	public List<ItemMovimentation> listItemMovimentationByPeriodGroupByItemGroup(Date start, Date end, List<ItemGroup> groups) {
+		return listMovimentationByPeriod(start, end, groups, null);
+	}
+
+	public List<ItemMovimentation> listItemMovimentationByPeriodGroupByUser(Date start, Date end, List<User> users) {
+		return listMovimentationByPeriod(start, end, null, users);
+	}
+	
+	private List<ItemMovimentation> listMovimentationByPeriod(Date start, Date end, List<ItemGroup> groups, List<User> users) {
+		StringBuilder query = new StringBuilder("FROM " + ItemMovimentation.class.getSimpleName())
+		.append(" WHERE (date BETWEEN :start AND :end) ");
+		
+		if (groups != null) query.append(" AND item.itemGroup IN :groups ");
+		if (users != null) query.append(" AND userAdmin IN :users ");
+		
+		query.append(" ORDER BY date ");
 		
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("start", start);
 		parameters.put("end", end);
+		if (groups != null) parameters.put("groups", groups);
+		if (users != null) parameters.put("users", users);
 		
 		return findResults(query.toString(), parameters);
 	}

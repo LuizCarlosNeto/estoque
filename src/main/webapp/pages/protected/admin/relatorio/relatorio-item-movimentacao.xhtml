@@ -10,16 +10,23 @@
 		<ui:composition template="/pages/protected/templates/layout.xhtml">
 			<ui:define name="content">
 				<p:separator />
-				<h:form id="form" >
+				<h:form id="formRelatorio" >
 				    <p:panel header="Relatório de Movimentação" style="margin-bottom:10px;">
-						<p:panelGrid columns="5">
+						<p:panelGrid columns="4">
 							<h:outputLabel value="Inicio"/>
 							<p:calendar value="#{itemBBean.startPeriod}"/>
 							<h:outputLabel value="Fim"/>
 							<p:calendar value="#{itemBBean.endPeriod}"/>
-							<p:commandButton value="buscar" update="@form"/>
 						</p:panelGrid>
-						<p:dataTable id="entityDT" var="itemTable" value="#{itemBBean.listItensByPeriod}">
+						
+						<p:panelGrid columns="3">
+							<p:commandButton value="periodo" label="buscar por período" action="#{itemBBean.listItensByPeriod}"/>
+							<p:commandButton value="grupo" label="buscar por período e grupo" onclick="PF('dlgGroup').show();"/>
+							<p:commandButton value="usuário" label="buscar por período e Usuário" onclick="PF('dlgUser').show();"/>
+						</p:panelGrid>
+						<br/>
+							
+						<p:dataTable id="entityDT" var="itemTable" value="#{itemBBean.itemMovimentations}">
 					        <p:column headerText="Id">
 					            <h:outputText value="#{itemTable.id}" />
 					        </p:column>
@@ -35,9 +42,65 @@
 					        <p:column headerText="Item">
 					            <h:outputText value="#{itemTable.item.name}" />
 					        </p:column>
+					        <p:column headerText="Grupo">
+					            <h:outputText value="#{itemTable.item.itemGroup.name}" />
+					        </p:column>
+					        <p:column headerText="Usuário">
+					            <h:outputText value="#{itemTable.userAdmin.name}" />
+					        </p:column>
+					        
 					    </p:dataTable>
 				    </p:panel>
 			    </h:form>
+			    
+			    <p:dialog header="Selecione Grupos" widgetVar="dlgGroup" modal="true" >
+				    <h:form>
+				    	<p:panel header="Grupo de Itens" style="margin-bottom:10px;">
+							<p:dataTable id="entityDT" var="itemGroupTable" value="#{itemBBean.listItemGroup}" 
+									selection="#{itemBBean.groupsSelected}" rowKey="#{itemGroupTable.id}">
+						        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						        <p:column headerText="Id">
+						            <h:outputText value="#{itemGroupTable.id}" />
+						        </p:column>
+						        <p:column headerText="Nome">
+						            <h:outputText value="#{itemGroupTable.name}" />
+						        </p:column>
+						    </p:dataTable>
+					    </p:panel>	
+				    
+				    	<p:commandButton value="buscar" label="buscar por período e grupo" update=":formRelatorio" 
+							action="#{itemBBean.listItensByPeriodGroupByItemGroup}" onclick="PF('dlgGroup').hide();"/>
+				    </h:form>
+				</p:dialog> 
+				
+				<p:dialog header="Selecione Usuários" widgetVar="dlgUser" modal="true" >
+					<h:form>
+						<p:panel header="Grupo de Itens" style="margin-bottom:10px;">
+							<p:dataTable id="entityDT" var="userTable" value="#{itemBBean.listUser}" 
+									selection="#{itemBBean.usersSelected}" rowKey="#{userTable.id}">
+						        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						        <p:column headerText="Id">
+						            <h:outputText value="#{userTable.id}" />
+						        </p:column>
+						        <p:column headerText="Email">
+						            <h:outputText value="#{userTable.email}" />
+						        </p:column>
+						        <p:column headerText="Nome">
+						            <h:outputText value="#{userTable.name}" />
+						        </p:column>
+						        <p:column headerText="Tipo">
+						            <h:outputText value="#{userTable.role}" />
+						        </p:column>
+						        <p:column headerText="Departamento">
+						            <h:outputText value="#{userTable.department.name}" />
+						        </p:column>
+						    </p:dataTable>
+					    </p:panel>	
+						<p:commandButton value="usuário" label="buscar por período e Usuário" update=":formRelatorio" 
+							action="#{itemBBean.listItensByPeriodGroupByUser}" onclick="PF('dlgUser').hide();"/>
+					</h:form>
+				</p:dialog> 
+				
 			</ui:define>
     	</ui:composition>
 	</h:body>
