@@ -20,7 +20,7 @@
 						</p:panelGrid>
 						
 						<p:panelGrid columns="3">
-							<p:commandButton value="periodo" label="buscar por período" action="#{itemBBean.listItensByPeriod}"/>
+							<p:commandButton value="periodo" label="buscar por período" action="#{itemBBean.listItensByPeriod}" update="@form"/>
 							<p:commandButton value="grupo" label="buscar por período e grupo" onclick="PF('dlgGroup').show();"/>
 							<p:commandButton value="usuário" label="buscar por período e Usuário" onclick="PF('dlgUser').show();"/>
 						</p:panelGrid>
