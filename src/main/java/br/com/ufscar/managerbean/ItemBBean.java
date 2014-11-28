@@ -3,6 +3,7 @@ package br.com.ufscar.managerbean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -209,6 +210,13 @@ public class ItemBBean implements Serializable {
 	}
 
 	public Date getStartPeriod() {
+		//Período padrão: Do início do mês até o dia atual.
+		if (this.startPeriod == null){
+			GregorianCalendar gc = new GregorianCalendar();
+			gc.setTime(getEndPeriod());
+			gc.set(GregorianCalendar.DAY_OF_MONTH, 1);
+			setStartPeriod(gc.getTime());
+		}
 		return startPeriod;
 	}
 
@@ -217,6 +225,9 @@ public class ItemBBean implements Serializable {
 	}
 
 	public Date getEndPeriod() {
+		//Período padrão: Do início do mês até o dia atual.
+		if (this.endPeriod == null)
+			setEndPeriod(new Date());
 		return endPeriod;
 	}
 

@@ -27,17 +27,17 @@
 						<br/>
 							
 						<p:dataTable id="entityDT" var="itemTable" value="#{itemBBean.itemMovimentations}">
-					        <p:column headerText="Id">
-					            <h:outputText value="#{itemTable.id}" />
-					        </p:column>
 					        <p:column headerText="Data">
 					            <h:outputText value="#{itemTable.date}" />
 					        </p:column>
-					        <p:column headerText="Quantidade">
-					            <h:outputText value="#{itemTable.quantity}" />
+					        <p:column headerText="Quantidade" style="text-align: right;" >
+					            <h:outputText value="#{itemTable.type == 'IN' ? '+' : '-'}#{itemTable.quantity}"  /> 
 					        </p:column>
-					        <p:column headerText="Tipo">
-					            <h:outputText value="#{itemTable.type}" />
+					        <p:column headerText="Valor Unitário">
+					            <h:outputText value="R$ #{itemTable.valorUnitario}" />
+					        </p:column>
+					        <p:column headerText="Valor Total">
+					            <h:outputText value="R$ #{itemTable.valorTotal}" />
 					        </p:column>
 					        <p:column headerText="Item">
 					            <h:outputText value="#{itemTable.item.name}" />

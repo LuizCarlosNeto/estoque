@@ -24,7 +24,10 @@
 					        <p:column headerText="Status">
 					            <h:outputText value="#{orderTable.status}" />
 					        </p:column>
-					        <p:column headerText="Responsável">
+					        <p:column headerText="Solicitante">
+					            <h:outputText value="#{orderTable.userClient.name}" />
+					        </p:column>
+					        <p:column headerText="Responsável Processamento">
 					            <h:outputText value="#{orderTable.userAdmin.name}" />
 					        </p:column>
 					    </p:dataTable>

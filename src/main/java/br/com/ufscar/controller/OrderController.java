@@ -34,6 +34,10 @@ public class OrderController {
 	
 	public void verifyOrder(Orderr order, User userAdmin) {
 		if (order != null && order.getItems() != null) {
+			//Se está processando pedido, deixa o solicitante como responsável pela movimentação.
+			if (order.getType().equals(OrderType.CLIENT) && order.getUserClient()!=null){
+				userAdmin = order.getUserClient();
+			}
 			for (ItemOrder itemOrder : order.getItems()) {
 				Item item = null;
 				if(itemOrder.getItem() != null) {

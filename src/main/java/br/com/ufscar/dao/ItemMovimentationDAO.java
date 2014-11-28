@@ -3,6 +3,7 @@ package br.com.ufscar.dao;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,6 +163,23 @@ public class ItemMovimentationDAO extends GenericDAO{
 	}
 	
 	private List<ItemMovimentation> listMovimentationByPeriod(Date start, Date end, List<ItemGroup> groups, List<User> users) {
+		//Padronização de hora para início/fim do período
+		GregorianCalendar gc = new GregorianCalendar();
+		//Ajuste da hora inicial
+		gc.setTime(start);
+		gc.set(GregorianCalendar.HOUR_OF_DAY, 0);
+		gc.set(GregorianCalendar.MINUTE, 0);
+		gc.set(GregorianCalendar.SECOND, 0);
+		gc.set(GregorianCalendar.MILLISECOND, 0);
+		start = gc.getTime();
+		//Ajuste da hora final
+		gc.setTime(end);
+		gc.set(GregorianCalendar.HOUR_OF_DAY, 23);
+		gc.set(GregorianCalendar.MINUTE, 59);
+		gc.set(GregorianCalendar.SECOND, 59);
+		gc.set(GregorianCalendar.MILLISECOND, 999);
+		end = gc.getTime();
+		
 		StringBuilder query = new StringBuilder("FROM " + ItemMovimentation.class.getSimpleName())
 		.append(" WHERE (date BETWEEN :start AND :end) ");
 		
